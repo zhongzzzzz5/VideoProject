@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>修改密码--layui后台管理模板 2.0</title>
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" href="../../layui/css/layui.css" media="all" />
+	<link rel="stylesheet" href="../../css/public.css" media="all" />
+</head>
+<body class="childrenBody">
+<form class="layui-form layui-row changePwd">
+	<div class="layui-col-xs12 layui-col-sm6 layui-col-md6">
+		<div class="layui-input-block layui-red pwdTips">请输入旧密码，且新密码必须两次输入一致才能提交</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">用户名</label>
+			<div class="layui-input-block">
+				<input type="text" id="username" value="" disabled class="layui-input layui-disabled">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">旧密码</label>
+			<div class="layui-input-block">
+				<input type="password" value="" id="old_password" placeholder="请输入旧密码" lay-verify="required|oldPwd" class="layui-input pwd">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">新密码</label>
+			<div class="layui-input-block">
+				<input type="password" value="" id="oldPwd" placeholder="请输入新密码" lay-verify="required|newPwd"  class="layui-input pwd">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">确认密码</label>
+			<div class="layui-input-block">
+				<input type="password" value="" id="new_username1" placeholder="请确认密码" lay-verify="required|confirmPwd" class="layui-input pwd">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<div class="layui-input-block">
+				<button class="layui-btn" type="button" id="submit" lay-filter="changePwd">立即修改</button>
+			</div>
+		</div>
+	</div>
+</form>
+<script type="text/javascript" src="../../common_config/common.js"></script>
+<script type="text/javascript" src="../../layui/layui.js"></script>
+<script type="text/javascript" src="user.js"></script>
+<script>
+	layui.use(["jquery","layer"],function () {
+		var $ = layui.jquery, mylayer = layui.layer,layer = parent.layer === undefined ? layui.layer : top.layer;
+
+		/**
+		 * 新密码格式要求提示
+		 */
+		//tips层
+		$("#oldPwd").bind("focus",function () {
+			mylayer.tips('需包含 数字,大写,小写,特殊字符', '#oldPwd');
+		});
+
+		/**
+		 *  修改密码
+		 */
+		$("#submit").bind("click",function () {
+			let old_password = $("#old_password").val();//旧密码
+			let oldPwd = $("#oldPwd").val();//第一次输入的新密码
+			let new_username1 = $("#new_username1").val();//再次输入的新密码
+			//验证
+			if(old_password && oldPwd && new_username1){
+				if(Pattern(new_username1,"password") == true){
+					if(oldPwd === new_username1){
+						if(new_username1 !== old_password){
+							//提交表单
+							$.post(host_url+"index.php/Admin/UserInfo/changePwd",
+									{
+										"id":window.sessionStorage.getItem("UID"),
+										"old_password":$("#old_password").val(),
+										"new_password":$("#new_username1").val()
+									},
+									function (json) {
+										if(json.code == 200){
+											//修改密码成功，重置表单
+											$("#old_password").val(null);
+											$("#new_username1").val(null);
+											$("#oldPwd").val(null);
+											//墨绿深蓝风
+											layer.alert('修改成功', {
+												skin: 'layui-layer-molv' //样式类名
+												,closeBtn: 0
+											}, function(){
+												layer.msg("正在返回首页...");
+												setTimeout(function () {
+													window.parent.location.href = "../../index.html";
+												},500)
+											});
+										}else {
+											layer.alert('旧密码不正确,请重新输入 ! ', {
+												skin: 'layui-layer-lan' //样式类名
+												,closeBtn: 0
+											});
+										}
+									}
+							)
+						}else {
+							layer.msg("新密码不能和旧密码一样 ! ");
+						}
+					}else {
+						layer.msg("新密码输入不一致 ! ");
+					}
+				}else {
+					layer.msg("新密码格式不正确(需满足(数字,大写,小写,特殊字符)");
+				}
+			}else {
+				layer.msg("请输入内容 ! ");
+			}
+
+		})
+	})
+</script>
+</body>
+</html>

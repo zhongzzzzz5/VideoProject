@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<body>
+    <div class="master-foot">
+        <div class="info">
+            <span id="site-author"></span>
+            |
+            <span id="site-icp"></span>
+            <span></span>
+        </div>
+    </div>
+</body>
+</html>
+ <style type="text/css">
+     *{
+         margin: 0;
+         padding: 0;
+     }
+     body{
+         width: 100%;
+         overflow: hidden;
+         background-color: #393D49;
+     }
+     .master-foot{
+         width: 100%;
+         height: 100%;
+     }
+     .info{
+         margin: 10px auto;
+         width: 200px;
+         display: flex;
+         color: #ffffff;
+         font-size: 13px;
+         font-family: "微软雅黑";
+     }
+     .info>span{
+         text-align: center;
+     }
+     .info>#site-author{
+         flex: 1;
+     }
+     .info>#site-icp{
+         flex: 3;
+     }
+ </style>
+ <script type="text/javascript">
+     var siteAuthor = document.querySelector("#site-author");
+     var siteIcp = document.querySelector("#site-icp");
+     //判断是否设置过本地master_foot
+     if(window.sessionStorage.getItem("master_foot") == null){ //未设置过本地master_foot
+         //原生js发送ajax请求
+         var ajax = new XMLHttpRequest();
+         ajax.open("get","http://www.5wpz.top/VideoProject/index.php/Admin/Master/foot");
+         ajax.send();
+         ajax.onreadystatechange = function () {
+             if (ajax.status==200) {
+                 var obj = JSON.parse(ajax.responseText);
+                 //console.log(obj);//输出接口给的相应的内容
+                 //设置底部信息到本地
+                 window.sessionStorage.setItem("master_foot","{'site_author':'"+obj.data.site_author+"',"+"'site_icp':'"+obj.data.site_icp+"'}");
+                 siteAuthor.innerHTML = obj.data.site_author;
+                 siteIcp.innerHTML = '<a href="https://beian.miit.gov.cn/#/Integrated/recordQuery" target="_blank" style="color: #ffffff;text-decoration: none">'+obj.data.site_icp+'</a>';
+             }else {
+                 alert("无法连接服务器");
+             }
+         }
+     }else {//已设置过master_foot到本地，可以直接读取
+         var master_foot = eval("("+window.sessionStorage.getItem("master_foot")+")");//解决 使用JSON.parse()的带来的报错
+         //console.log(master_foot);
+         siteAuthor.innerHTML = master_foot.site_author;
+         siteIcp.innerHTML = master_foot.site_icp;
+     }
+
+ </script>

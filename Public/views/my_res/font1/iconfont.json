@@ -1,0 +1,177 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "382963",
+      "name": "do-windows",
+      "font_class": "windows",
+      "unicode": "e605",
+      "unicode_decimal": 58885
+    },
+    {
+      "icon_id": "1668405",
+      "name": "安卓",
+      "font_class": "anzhuo",
+      "unicode": "e63f",
+      "unicode_decimal": 58943
+    },
+    {
+      "icon_id": "1727725",
+      "name": "苹果",
+      "font_class": "pingguo",
+      "unicode": "e63e",
+      "unicode_decimal": 58942
+    },
+    {
+      "icon_id": "2231328",
+      "name": "pc",
+      "font_class": "pc",
+      "unicode": "e65c",
+      "unicode_decimal": 58972
+    },
+    {
+      "icon_id": "2325971",
+      "name": "安卓",
+      "font_class": "anzhuo1",
+      "unicode": "e64d",
+      "unicode_decimal": 58957
+    },
+    {
+      "icon_id": "2793161",
+      "name": "苹果",
+      "font_class": "pingguo1",
+      "unicode": "e501",
+      "unicode_decimal": 58625
+    },
+    {
+      "icon_id": "3335157",
+      "name": "安卓",
+      "font_class": "anzhuo2",
+      "unicode": "e640",
+      "unicode_decimal": 58944
+    },
+    {
+      "icon_id": "5019617",
+      "name": "视频播放器-播放",
+      "font_class": "shipinbofangqi-bofang",
+      "unicode": "e61b",
+      "unicode_decimal": 58907
+    },
+    {
+      "icon_id": "5019647",
+      "name": "视频播放器-暂停",
+      "font_class": "shipinbofangqi-zanting",
+      "unicode": "e61c",
+      "unicode_decimal": 58908
+    },
+    {
+      "icon_id": "5515729",
+      "name": "安卓",
+      "font_class": "anzhuo3",
+      "unicode": "e627",
+      "unicode_decimal": 58919
+    },
+    {
+      "icon_id": "5872088",
+      "name": "do-windows",
+      "font_class": "do-windows",
+      "unicode": "e556",
+      "unicode_decimal": 58710
+    },
+    {
+      "icon_id": "6062139",
+      "name": "pc",
+      "font_class": "-",
+      "unicode": "e75c",
+      "unicode_decimal": 59228
+    },
+    {
+      "icon_id": "7415064",
+      "name": "安卓",
+      "font_class": "anzhuo4",
+      "unicode": "e63a",
+      "unicode_decimal": 58938
+    },
+    {
+      "icon_id": "7785532",
+      "name": "苹果",
+      "font_class": "pingguo2",
+      "unicode": "e64f",
+      "unicode_decimal": 58959
+    },
+    {
+      "icon_id": "8371685",
+      "name": "视频播放器系列图标",
+      "font_class": "shipinbofangqixilietubiao-",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "10296418",
+      "name": "安卓",
+      "font_class": "anzhuo5",
+      "unicode": "e68c",
+      "unicode_decimal": 59020
+    },
+    {
+      "icon_id": "10859001",
+      "name": "安卓",
+      "font_class": "anzhuo6",
+      "unicode": "e695",
+      "unicode_decimal": 59029
+    },
+    {
+      "icon_id": "11223307",
+      "name": "pc",
+      "font_class": "pc1",
+      "unicode": "e563",
+      "unicode_decimal": 58723
+    },
+    {
+      "icon_id": "11444446",
+      "name": "pc",
+      "font_class": "pc2",
+      "unicode": "e62c",
+      "unicode_decimal": 58924
+    },
+    {
+      "icon_id": "11847322",
+      "name": "安卓",
+      "font_class": "anzhuo7",
+      "unicode": "e634",
+      "unicode_decimal": 58932
+    },
+    {
+      "icon_id": "13257773",
+      "name": "安卓",
+      "font_class": "anzhuo8",
+      "unicode": "e606",
+      "unicode_decimal": 58886
+    },
+    {
+      "icon_id": "17305894",
+      "name": "安卓",
+      "font_class": "anzhuo9",
+      "unicode": "e644",
+      "unicode_decimal": 58948
+    },
+    {
+      "icon_id": "17525408",
+      "name": "pc",
+      "font_class": "pc3",
+      "unicode": "e62e",
+      "unicode_decimal": 58926
+    },
+    {
+      "icon_id": "18414838",
+      "name": "安卓",
+      "font_class": "anzhuo10",
+      "unicode": "e60a",
+      "unicode_decimal": 58890
+    }
+  ]
+}

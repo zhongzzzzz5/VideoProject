@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>接口分类管理</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="../../../layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="../../../css/public.css" media="all" />
+</head>
+<body class="childrenBody">
+<form class="layui-form">
+    <blockquote class="layui-elem-quote">
+        <a class="layui-btn layui-btn-sm add">新增<i class="layui-icon">&#xe654;</i></a>
+    </blockquote>
+    <table id="api_category" lay-filter="api_category"></table>
+    <!--操作-->
+    <script type="text/html" id="api_categoryBar">
+        <a class="layui-btn layui-btn-xs" lay-event="browse" style="margin-top: 3px"><i class="layui-icon" style="margin: 0 auto">&#xe62d;</i></a>
+        <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="edit" style="margin-top: 3px"><i class="layui-icon" style="margin: 0 auto">&#xe642;</i></a>
+        <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delete" style="margin-top: 3px"><i class="layui-icon" style="margin: 0 auto">&#xe640;</i></a>
+    </script>
+</form>
+<script type="text/javascript" src="../../../common_config/common.js"></script>
+<script type="text/javascript" src="../../../layui/layui.js"></script>
+<script type="text/javascript" src="api_category.js"></script>
+</body>
+</html>

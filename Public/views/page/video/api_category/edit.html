@@ -1,0 +1,51 @@
+<script type="text/javascript" src="../../../common_config/verifyRole/verifyRole.js"></script>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>编辑分类</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="../../../layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="../../../css/public.css" media="all" />
+    <style>
+        .layui-form-label{
+            width:auto !important;
+        }
+        .layui-input-block{
+            margin-left: 60px !important;
+            padding-right: 20px;
+        }
+    </style>
+</head>
+<body class="childrenBody">
+<form class="layui-form">
+<!--    主键-->
+    <input type="hidden" id="category_id">
+    <div class="layui-form-item">
+        <label class="layui-form-label">类别</label>
+        <div class="layui-input-block">
+            <input type="text" class="layui-input" id="category_name"  placeholder="请输入类别" />
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">描述</label>
+        <div class="layui-input-block">
+            <textarea id="category_describe"  placeholder="请输入描述" class="layui-textarea"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <input type="button" class="layui-btn" id="submit" style="width: 180px;margin: 0 auto" value="提交">
+        </div>
+    </div>
+</form>
+<script type="text/javascript" src="../../../common_config/common.js"></script>
+<script type="text/javascript" src="../../../layui/layui.js"></script>
+<script type="text/javascript" src="edit.js"></script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="utf-8">
+<title>添加接口</title>
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no">
+<link rel="stylesheet" href="../../../layui/css/layui.css" media="all" />
+<body>
+<form action="" class="layui-form">
+    <div class="layui-form-item">
+        <br>
+        <label class="layui-form-label">接口名</label>
+        <div class="layui-input-block">
+            <input type="text" id="api_name" required  lay-verify="required" placeholder="请输入接口名" autocomplete="off" class="layui-input" style="width: 500px;">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">接口地址</label>
+        <div class="layui-input-block">
+            <input type="text" id="api_url" required  lay-verify="required" placeholder="请输入接口地址" autocomplete="off" class="layui-input" style="width: 500px;float: left">
+            <button type="button" class="layui-btn layui-btn-primary" id="testUrl" style="float: left;margin-left: 5px">测试</button>
+            <script>
+                var apiUrl = document.querySelector("#api_url");
+                var testUrl = document.querySelector("#testUrl");
+                testUrl.addEventListener("click",function () {
+                    if(apiUrl.value){
+                        window.open(apiUrl.value);
+                    }else {
+                        alert("请输入接口地址");
+                    }
+                });
+            </script>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">分类</label>
+        <div class="layui-input-block">
+            <div style="width: 500px;" id="api_category">
+<!--                <input type="radio" name="sex" value="nan" title="男">-->
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">描述</label>
+        <div class="layui-input-block">
+            <div id="div1" style="width: 800px"></div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <button type="button" class="layui-btn" id="submit" style="float: left;margin-left: 110px">立即提交</button>
+    </div>
+</form>
+
+<!--富文本编辑器-->
+<script type="text/javascript" src="../../../plugin/wangEditor/wangEditor.min.js"></script>
+<script type="text/javascript">
+    const E = window.wangEditor
+    const editor = new E('#div1')
+    // 或者 const editor = new E( document.getElementById('div1') )
+    editor.create()
+</script>
+<script type="text/javascript" src="../../../common_config/common.js"></script>
+<script type="text/javascript" src="../../../layui/layui.js"></script>
+<script type="text/javascript" src="add_api.js"></script>
+</body>
+</html>

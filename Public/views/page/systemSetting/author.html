@@ -1,0 +1,78 @@
+<script type="text/javascript" src="../../common_config/verifyRole/verifyRole.js"></script>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>文章列表--layui后台管理模板 2.0</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="../../layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="../../css/public.css" media="all" />
+</head>
+<body class="childrenBody">
+<form class="layui-form" style="width:80%;">
+    <br>
+    <div class="layui-form-item layui-row layui-col-xs12">
+        <label class="layui-form-label">作者</label>
+        <div class="layui-input-block">
+            <input type="text" id="author" class="layui-input userName" lay-verify="required" placeholder="请输入内容">
+        </div>
+    </div>
+    <div class="layui-form-item layui-row layui-col-xs12">
+        <label class="layui-form-label">微信</label>
+        <div class="layui-input-block">
+            <input type="text" id="author_wx" class="layui-input userName" lay-verify="required" placeholder="请输入微信号">
+        </div>
+        <div class="layui-input-block">
+            <br>
+            <div class="layui-upload">
+                <button type="button" class="layui-btn" id="test1">上传图片</button>
+                <div class="layui-upload-list">
+                    <img src="" alt="" class="layui-upload-img" id="demo1" width="80">
+                    <p id="demoText"></p>
+                </div>
+            </div>
+            <input type="hidden" id="wx_img_name" value="">
+            <input type="hidden" id="wx_img_path" value="">
+        </div>
+    </div>
+    <div class="layui-form-item layui-row layui-col-xs12">
+        <label class="layui-form-label">QQ</label>
+        <div class="layui-input-block">
+            <input type="text" id="author_qq" class="layui-input userName" lay-verify="required" placeholder="请输入QQ号">
+        </div>
+        <div class="layui-input-block">
+            <br>
+            <div class="layui-upload">
+                <button type="button" class="layui-btn" id="test2">上传图片</button>
+                <div class="layui-upload-list">
+                    <img src="" alt="" class="layui-upload-img" id="demo2" width="80">
+                    <p id="demoText1"></p>
+                </div>
+            </div>
+            <input type="hidden" id="qq_img_name" value="">
+            <input type="hidden" id="qq_img_path" value="">
+        </div>
+    </div>
+    <div class="layui-form-item layui-row layui-col-xs12">
+        <label class="layui-form-label">描述</label>
+        <div class="layui-input-block">
+            <textarea placeholder="请输入描述信息" id="content" class="layui-textarea"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item layui-row layui-col-xs12">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-sm" id="submit" type="button">立即设置</button>
+        </div>
+    </div>
+</form>
+<script type="text/javascript" src="../../common_config/common.js"></script>
+<script type="text/javascript" src="../../layui/jq/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="../../layui/layui.js"></script>
+<script type="text/javascript" src="author.js"></script>
+</body>
+</html>

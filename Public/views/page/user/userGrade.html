@@ -1,0 +1,31 @@
+<script type="text/javascript" src="../../common_config/verifyRole/verifyRole.js"></script>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>会员等级</title>
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" href="../../layui/css/layui.css" media="all" />
+	<link rel="stylesheet" href="../../css/public.css" media="all" />
+</head>
+<body class="childrenBody">
+<form class="layui-form" onkeydown="if(event.keyCode==13) return false;">
+	<blockquote class="layui-elem-quote">
+		<a class="layui-btn layui-btn-sm addGrade">新增等级</a>　<span class="layui-word-aux">等级不同，对应的权限也不同</span>
+	</blockquote>
+	<table id="userGrade" lay-filter="userGrade"></table>
+	<!--操作-->
+	<script type="text/html" id="gradeBar">
+		<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delete" style="margin-top: 3px">删除</a>
+	</script>
+</form>
+<script type="text/javascript" src="../../common_config/common.js"></script>
+<script type="text/javascript" src="../../layui/layui.js"></script>
+<script type="text/javascript" src="userGrade.js"></script>
+</body>
+</html>
