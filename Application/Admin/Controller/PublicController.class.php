@@ -315,9 +315,9 @@ class PublicController extends Controller{
                         if(!$res){ //添加临时数据失败，终止程序
                             exit();
                         }
-                        //发送邮箱  //'</h1><p>请点击链接以验证操作:'.SERVER_URL.__ROOT__.'/index.php/Admin/Public/emailVerify?request_token='.$request_token.'</p>'
                         //'www.5wpz.top【重置密码】'
-                        $sendRes= sendEmail($addressee_email,$addressee_name,'www.5wpz.top【重置密码】','</h1><p>请点击链接以验证操作:'.SERVER_URL.__ROOT__.'/index.php/Admin/Public/emailVerify?request_token='.$request_token.'</p>');
+                        //发送邮箱  //'</h1><p>请点击链接以验证操作:'.SERVER_URL.__ROOT__.'/index.php/Admin/Public/emailVerify?request_token='.$request_token.'</p>'
+                        $sendRes = sendEmail($addressee_email,$addressee_name,'www.5wpz.top【重置密码】','</h1><p>请点击链接以验证操作:'.SERVER_URL.__ROOT__.'/index.php/Admin/Public/emailVerify?request_token='.$request_token.'</p>');
                         if($sendRes){
                             //echo '邮件发送成功';
                             $json = [
