@@ -1,7 +1,5 @@
 <?php
 
-use Org\PHPMailer\PHPMailer;
-
 function gbk2utf8(){
     echo 'gbk2utf8';
 }
@@ -243,6 +241,7 @@ function array_iconv($in_charset,$out_charset,$arr){
  * @param $accessoryPath    ***附件 [可选]
  * @return string|bool
  */
+use Org\PHPMailer\PHPMailer;
 function sendEmail($addressee_email,$addressee_name,$textSubject,$htmlBody,$accessoryPath=""){
     //发送邮箱
     $mail = new PHPMailer(true);
