@@ -1,5 +1,7 @@
 <?php
 
+use Org\PHPMailer\PHPMailer;
+
 function gbk2utf8(){
     echo 'gbk2utf8';
 }
@@ -222,7 +224,60 @@ function getplaintextintrofromhtml($html) {
 
 /**
  *  解决ipLocation乱码
+ * @param $in_charset
+ * @param $out_charset
+ * @param $arr
+ * @return false|string
  */
 function array_iconv($in_charset,$out_charset,$arr){
     return iconv($in_charset,$out_charset,var_export($arr,true));
+}
+
+
+/**
+ *  邮箱
+ * @param $addressee_email  ***收件人邮箱
+ * @param $addressee_name   ***收件人名字
+ * @param $textSubject      ***主题
+ * @param $htmlBody         ***内容
+ * @param $accessoryPath    ***附件 [可选]
+ * @return array
+ * 返回类型
+ * 成功  ["result"=>true , "message"=>发送结果]
+ * 失败  ["result"=>false , "message"=>错误]
+ */
+function sendEmail($addressee_email,$addressee_name,$textSubject,$htmlBody,$accessoryPath){
+    //发送邮箱
+    $mail = new PHPMailer(true);
+    //服务器配置
+    $mail->CharSet ="UTF-8";                     //设定邮件编码
+    $mail->SMTPDebug = 0;                        // 调试模式输出
+    $mail->isSMTP();                             // 使用SMTP
+    $mail->Host = 'ssl://smtp.qq.com';                // SMTP服务器
+    $mail->SMTPAuth = true;                      // 允许 SMTP.class 认证
+    $mail->Username = '2459450271@qq.com';                // SMTP.class 用户名  即邮箱的用户名
+    $mail->Password = 'nvpotvzkslziecjd';             // SMTP.class 密码  部分邮箱是授权码(例如163邮箱)【可以去qq邮箱设置查看】
+    $mail->SMTPSecure = 'ssl';                    // 允许 TLS 或者ssl协议
+    $mail->Port = 465;                            // 服务器端口 25 或者465 具体要看邮箱服务器支持
+
+    $mail->setFrom('2459450271@qq.com', '吴培忠');  //发件人
+    $mail->addAddress($addressee_email, $addressee_name);  // 收件人
+    $mail->addReplyTo('2459450271@qq.com', '吴培忠'); //回复的时候回复给哪个邮箱 建议和发件人一致
+
+    //发送附件
+     if($accessoryPath){ $mail->addAttachment($accessoryPath); }         // 添加附件
+    // $mail->addAttachment('../thumb-1.jpg', 'new.jpg');    // 发送附件并且重命名
+
+    //Content
+    $mail->isHTML(true);                                  // 是否以HTML文档格式发送  发送后客户端可直接显示对应HTML内容
+    $mail->Subject = $textSubject . time();//主题
+    $mail->Body    = '<h1>您好！'.$addressee_name.'</h1>'.$htmlBody. "<br/>".date('Y-m-d H:i:s');//内容
+    $mail->AltBody = htmlspecialchars(trim(strip_tags($htmlBody)));//若对方不支持html，则使用纯文本内容
+
+    $sendRes = $mail->send();
+    if($sendRes){
+        return ["result"=>true, "message"=>$sendRes]; //成功则返回发送结果
+    }else{
+        return ["result"=>false, "message"=>$mail->ErrorInfo]; //失败则返回错误
+    }
 }

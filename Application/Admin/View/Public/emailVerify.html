@@ -25,7 +25,9 @@
     </style>
 </head>
 <!--body禁止选中复制等操作-->
-<body oncontextmenu="return false" onselectstart="return false">
+<!--oncontextmenu事件 : 鼠标右击-->
+<!--onselectstart事件 : 禁止选定文本-->
+<body oncontextmenu="alert('禁止操作哟'); return false" onselectstart="alert('禁止操作哟'); return false">
     <div class="box layui-anim layui-anim-up" style="background-color: {$text_data['bgc']};">
         <h1>{$text_data['text']}</h1>
     </div>
