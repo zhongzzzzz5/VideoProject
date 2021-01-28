@@ -241,12 +241,9 @@ function array_iconv($in_charset,$out_charset,$arr){
  * @param $textSubject      ***主题
  * @param $htmlBody         ***内容
  * @param $accessoryPath    ***附件 [可选]
- * @return array
- * 返回类型
- * 成功  ["result"=>true , "message"=>发送结果]
- * 失败  ["result"=>false , "message"=>错误]
+ * @return string|bool
  */
-function sendEmail($addressee_email,$addressee_name,$textSubject,$htmlBody,$accessoryPath){
+function sendEmail($addressee_email,$addressee_name,$textSubject,$htmlBody,$accessoryPath=""){
     //发送邮箱
     $mail = new PHPMailer(true);
     //服务器配置
@@ -276,8 +273,8 @@ function sendEmail($addressee_email,$addressee_name,$textSubject,$htmlBody,$acce
 
     $sendRes = $mail->send();
     if($sendRes){
-        return ["result"=>true, "message"=>$sendRes]; //成功则返回发送结果
+        return $sendRes; //成功则返回发送结果
     }else{
-        return ["result"=>false, "message"=>$mail->ErrorInfo]; //失败则返回错误
+        return false; //失败
     }
 }
