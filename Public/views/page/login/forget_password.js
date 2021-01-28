@@ -41,6 +41,7 @@ layui.use(['form','jquery','layer'], function() {
                                     layer.close(index);
                                     if(json.code == 200){
                                         if(json.result == 1){
+                                            $("#sendEmail").attr("disabled",true);
                                             var id = json.data.id;//用户主键
                                             let resIndex = top.layer.msg('邮箱发送成功，请注意查收',{icon: 16,time:false,shade:0.8})
                                             var timer = setInterval(function () {
