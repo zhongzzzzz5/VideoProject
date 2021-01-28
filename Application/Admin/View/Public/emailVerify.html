@@ -24,11 +24,12 @@
         }
     </style>
 </head>
-<body>
+<!--body禁止选中复制等操作-->
+<body oncontextmenu="return false" onselectstart="return false">
     <div class="box layui-anim layui-anim-up" style="background-color: {$text_data['bgc']};">
         <h1>{$text_data['text']}</h1>
     </div>
-
+    <iframe src="__ROOT__/Public/views/page/master_page/foot.html" frameborder="0" height="40" style="display: block; width: 100%;position: absolute;bottom: 0"></iframe>
 <script type="text/javascript" src="__ROOT__/Public/views/layui/layui.js"></script>
 </body>
 </html>
