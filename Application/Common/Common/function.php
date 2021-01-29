@@ -230,3 +230,13 @@ function getplaintextintrofromhtml($html) {
 function array_iconv($in_charset,$out_charset,$arr){
     return iconv($in_charset,$out_charset,var_export($arr,true));
 }
+
+
+/**
+ *  html转化为纯文本
+ * @param $html
+ * @return string
+ */
+function html_to_text($html){
+    return htmlspecialchars(trim(strip_tags($html)));
+}
