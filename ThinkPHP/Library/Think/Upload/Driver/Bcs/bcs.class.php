@@ -49,7 +49,7 @@ class BaiduBCS {
 	 ******************* Policy Constants**********************
 	 **********************************************************/
 	const STATEMETS = 'statements';
-	//Action 用户动作
+	//ActionClass 用户动作
 	//'*'代表所有action
 	const BCS_SDK_ACL_ACTION_ALL = '*';
 	//与bucket相关的action

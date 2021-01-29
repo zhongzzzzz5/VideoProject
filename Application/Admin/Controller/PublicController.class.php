@@ -3,6 +3,7 @@ namespace Admin\Controller;
 use Admin\Model\Login_infoModel;
 use Admin\Model\UserModel;
 use Exception;
+use Libs\Action\Email;
 use Org\Net\JWT;
 use Org\PHPMailer\PHPMailer;
 use Think\Controller;
@@ -317,7 +318,8 @@ class PublicController extends Controller{
                         }
                         //'www.5wpz.top【重置密码】'
                         //发送邮箱  //'</h1><p>请点击链接以验证操作:'.SERVER_URL.__ROOT__.'/index.php/Admin/Public/emailVerify?request_token='.$request_token.'</p>'
-                        $sendRes = sendEmail($addressee_email,$addressee_name,'www.5wpz.top【重置密码】','</h1><p>请点击链接以验证操作:'.SERVER_URL.__ROOT__.'/index.php/Admin/Public/emailVerify?request_token='.$request_token.'</p>');
+                        $email = new Email();
+                        $sendRes = $email->sendEmail($addressee_email,$addressee_name,'www.5wpz.top【重置密码】','</h1><p>请点击链接以验证操作:'.SERVER_URL.__ROOT__.'/index.php/Admin/Public/emailVerify?request_token='.$request_token.'</p>');
                         if($sendRes){
                             //echo '邮件发送成功';
                             $json = [

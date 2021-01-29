@@ -537,7 +537,7 @@ class PHPMailer
     public $DKIM_private_string = '';
 
     /**
-     * Callback Action function name.
+     * Callback ActionClass function name.
      *
      * The function that handles the result of the send email action.
      * It is called out by send() for each email sent.

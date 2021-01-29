@@ -16,11 +16,11 @@ return array(
     /* core language package */ 
     '_MODULE_NOT_EXIST_'     => "Module can't be loaded",
     '_CONTROLLER_NOT_EXIST_' =>	"Controller can't be loaded",
-    '_ERROR_ACTION_'         => 'Illegal Action',
+    '_ERROR_ACTION_'         => 'Illegal ActionClass',
     '_LANGUAGE_NOT_LOAD_'    => "Can't load language package",
     '_TEMPLATE_NOT_EXIST_'   => "Template doesn't exist",
     '_MODULE_'               => 'Module',
-    '_ACTION_'               => 'Action',
+    '_ACTION_'               => 'ActionClass',
     '_MODEL_NOT_EXIST_'      => "Model can't be loaded",
     '_VALID_ACCESS_'         => 'No access',
     '_XML_TAG_ERROR_'        => 'XML tag syntax errors',
