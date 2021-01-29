@@ -16,8 +16,8 @@ class Email{
 
     /**
      * Email constructor.
-     * @param string $Username ***用户名[可选]
-     * @param string $Password ***密码[可选]
+     * @param string $Username ***SMTP用户名[可选]
+     * @param string $Password ***SMTP密码[可选]
      * @param $addresser_email ***发件人邮箱[可选]
      * @param $addresser_name  ***发件人姓名[可选]
      * @describe 构造函数
@@ -84,7 +84,7 @@ class Email{
      * @describe 返回成功结果
      */
     public function getSendSuccess(){
-        return $this->sendSuccess;
+        return $this->sendSuccess?$this->sendSuccess:false;
     }
 
     /**
@@ -92,6 +92,6 @@ class Email{
      * @describe 返回失败的错误信息
      */
     public function getSendError(){
-        return $this->sendError;
+        return $this->sendError?$this->sendError:false;
     }
 }
