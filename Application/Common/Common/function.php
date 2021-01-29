@@ -233,10 +233,10 @@ function array_iconv($in_charset,$out_charset,$arr){
 
 
 /**
- *  html转化为纯文本
+ *  提取html中的纯文本
  * @param $html
  * @return string
  */
-function html_to_text($html){
+function get_html_text($html){
     return htmlspecialchars(trim(strip_tags($html)));
 }
