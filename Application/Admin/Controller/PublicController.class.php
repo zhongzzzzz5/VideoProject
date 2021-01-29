@@ -2,10 +2,8 @@
 namespace Admin\Controller;
 use Admin\Model\Login_infoModel;
 use Admin\Model\UserModel;
-use Exception;
 use Libs\Action\Email;
 use Org\Net\JWT;
-use Org\PHPMailer\PHPMailer;
 use Think\Controller;
 use Think\Verify;
 
