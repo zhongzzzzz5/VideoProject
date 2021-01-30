@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>邮件</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="../../../layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="../../../css/public.css" media="all" />
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_2289172_hj8hlv6el5.css">
+    <style>
+        body{
+            background-color: #f2f2f2;
+        }
+        .bt-all li{
+            padding: 5px 0;
+        }
+        .bt-all li button{
+            width: 80%;
+        }
+    </style>
+</head>
+<body class="childrenBody">
+<div class="layui-container">
+    <div class="layui-row">
+        <div class="layui-col-md3">
+            <div >
+                <ul class="bt-all">
+                    <li><button class="layui-btn layui-btn-normal"><i class="layui-icon">&#xe642;</i> 写&nbsp&nbsp&nbsp信</button></li>
+                    <li><button class="layui-btn"><i class="iconfont icon-fajianxiang"></i> 发件箱</button></li>
+                    <li><button class="layui-btn"><i class="iconfont icon-shoujianxiang"></i> 收件箱</button></li>
+                </ul>
+            </div>
+        </div>
+        <div class="layui-col-md9" style="background-color:#fff;padding: 20px">
+            <div>
+                <fieldset class="layui-elem-field layui-field-title" style="margin-top: 10px;">
+                    <legend>写信</legend>
+                </fieldset>
+                <form class="layui-form layui-form-pane">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">收件人</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="addressee" id="addressee" required  lay-verify="required" placeholder="请选择收件人" autocomplete="off" class="layui-input">
+                            <input type="hidden" id="addressee_ids" value="">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">主题</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="subject" id="subject" required  lay-verify="required" placeholder="请输入主题" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-upload">
+                            <button type="button" style="float: left; width: 105px;" class="layui-btn layui-btn-primary" id="testList">选择附件</button>
+                            <div class="layui-input-block">
+                                <div class="layui-upload-list">
+                                    <table class="layui-table">
+                                        <thead>
+                                        <tr><th>文件名</th>
+                                            <th>大小</th>
+                                            <th>状态</th>
+                                            <th>操作</th>
+                                        </tr></thead>
+                                        <tbody id="demoList"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div id="editor"></div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div style="float: right">
+                            <button type="button" class="layui-btn layui-btn-normal" id="submit" style="width: 100px;"><i class="layui-icon">&#xe605;</i>发送</button>
+                            <button type="button" class="layui-btn layui-btn-primary" id="cancel" style="width: 100px;"><i class="layui-icon">&#x1006;</i> 取消</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../../../common_config/common.js"></script>
+<script type="text/javascript" src="../../../layui/layui.js"></script>
+<script type="text/javascript" src="../../../plugin/wangEditor/wangEditor.min.js"></script>
+<script type="text/javascript">
+    const E = window.wangEditor
+    const editor = new E('#editor')
+    // 或者 const editor = new E( document.getElementById('editor') )
+    editor.create()
+</script>
+<script type="text/javascript" src="email.js"></script>
+</body>
+</html>

@@ -89,7 +89,7 @@ class IndexController extends Controller{
         $json = [
             //内容管理
             "contentManagement"=>[
-                ["title"=>"影视接口管理","icon"=>"icon-zhiding","href"=>"","spread"=>false,
+                ["title"=>"影视接口","icon"=>"icon-zhiding","href"=>"","spread"=>false,
                     "children"=>[
                         ["title"=>"接口管理","icon"=>"&#xe609;","href"=>"page/video/api/api.html","spread"=>false],
                         ["title"=>"接口分类管理","icon"=>"&#xe609;","href"=>"page/video/api_category/api_category.html","spread"=>false],
@@ -104,6 +104,12 @@ class IndexController extends Controller{
                 ["title"=>"文章列表","icon"=>"icon-text","href"=>"page/news/newsList.html","spread"=>false],
                 ["title"=>"软件管理","icon"=>"&#xe609;","href"=>"page/app/app.html","spread"=>false],
                 ["title"=>"图片管理","icon"=>"&#xe634;","href"=>"page/img/images.html","spread"=>false],
+                ["title"=>"站内信","icon"=>"iconfont icon-youxiang_huaban","href"=>"","spread"=>false,
+                    "children"=>[
+                        ["title"=>"邮件管理","icon"=>"iconfont icon-youxiang1","href"=>"page/message/email/email.html","spread"=>false],
+                        ["title"=>"站内聊天","icon"=>"iconfont icon-huaban","href"=>"","spread"=>false],
+                    ]
+                ]
             ],
             //用户中心
             "memberCenter"=>[

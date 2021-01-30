@@ -5,13 +5,32 @@ use Org\PHPMailer\PHPMailer;
 
 class Email{
     //服务器配置,qq服务器
-    private $Username = '2459450271@qq.com';          // SMTP.class 用户名  即邮箱的用户名
-    private $Password = 'nvpotvzkslziecjd';           // SMTP.class 密码  部分邮箱是授权码(例如163邮箱)【可以去qq邮箱设置查看】
+    /**
+     * @var string
+     */
+    private $Username = '2459450271@qq.com';// SMTP.class 用户名  即邮箱的用户名
+    /**
+     * @var string
+     */
+    private $Password = 'nvpotvzkslziecjd'; // SMTP.class 密码  部分邮箱是授权码(例如163邮箱)【可以去qq邮箱设置查看】
 
+    /**
+     * @var string
+     */
     private $addresser_email = "2459450271@qq.com";//发件人邮箱
+    /**
+     * @var string
+     */
     private $addresser_name = "吴培忠";//发件人姓名
 
+
+    /**
+     * @var mixed
+     */
     private $sendSuccess;//成功结果
+    /**
+     * @var mixed
+     */
     private  $sendError;//失败结果
 
     /**
