@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../../layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="../../../css/public.css" media="all" />
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_2289172_hj8hlv6el5.css">
+</head>
+<body>
+
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 10px;">
+    <legend>写信</legend>
+</fieldset>
+<form class="layui-form layui-form-pane" id="form-write">
+    <div class="layui-form-item">
+        <label class="layui-form-label">收件人</label>
+        <div class="layui-input-block">
+            <input type="text" name="addressee" id="addressee" required  lay-verify="required" placeholder="请选择收件人" autocomplete="off" class="layui-input">
+            <input type="hidden" id="addressee_ids" value="">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">主题</label>
+        <div class="layui-input-block">
+            <input type="text" name="subject" id="subject" required  lay-verify="required" placeholder="请输入主题" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-upload">
+            <button type="button" style="float: left; width: 105px;" class="layui-btn layui-btn-primary" id="testList">选择附件</button>
+            <div class="layui-input-block">
+                <input type="text" class="layui-input uploadFileName layui-disabled" disabled placeholder="多文件建议压缩后再上传">
+            </div>
+
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div id="editor"></div>
+    </div>
+    <div class="layui-form-item">
+        <div style="float: right">
+            <button type="button" class="layui-btn layui-btn-normal" id="submit" style="width: 100px;"><i class="layui-icon">&#xe605;</i>发送</button>
+            <button type="button" class="layui-btn layui-btn-primary" id="reset" style="width: 100px;"><i class="layui-icon">&#xe669;</i>重置</button>
+        </div>
+    </div>
+</form>
+
+<script type="text/javascript" src="../../../common_config/common.js"></script>
+<script type="text/javascript" src="../../../layui/layui.js"></script>
+<script type="text/javascript" src="../../../plugin/wangEditor/wangEditor.min.js"></script>
+<script type="text/javascript">
+    const E = window.wangEditor
+    const editor = new E('#editor')
+    // 或者 const editor = new E( document.getElementById('editor') )
+    editor.create()
+</script>
+<script>
+    layui.use(['form','upload','jquery','layer','table'],function () {
+        var form = layui.form,
+            upload = layui.upload,
+            $ = layui.jquery,
+            table = layui.table ,
+            layer = parent.layer === undefined ? layui.layer : top.layer;
+
+        /**
+         *   写信---------------------------开始
+         */
+            //监听收件人框
+        var openIndex;
+        $("#addressee").focus(function () {
+            openIndex = layer.open({
+                type: 2,
+                title: '选择收件人',
+                shadeClose: true,
+                shade: 0.1,
+                area: ['420px', '420px'],
+                content: 'page/message/email/email_table.html',
+                end:function () {
+                    if(window.sessionStorage.getItem("okObj")){
+                        var okObj = JSON.parse(window.sessionStorage.getItem("okObj"));
+                        window.sessionStorage.removeItem("okObj");
+                        let str_username = '';
+                        let str_ids = '';
+                        for(let i=0; i<okObj.newUserName.length; i++){
+                            if(i==okObj.newUserName.length-1){
+                                str_username += okObj.newUserName[i];
+                                str_ids += okObj.newsId[i];
+                            }else {
+                                str_username += okObj.newUserName[i] +',';
+                                str_ids += okObj.newsId[i] +',';
+                            }
+                        }
+                        $("#addressee").val(str_username);
+                        $("#addressee_ids").val(str_ids);
+                    }else {
+                        $("#addressee").val(null);
+                        $("#addressee_ids").val(null);
+                    }
+                }
+            });
+        });
+
+
+
+        //附件上传
+        var uploadLoadingIndex = null;//初始化loading索引
+        var upload_id = null;//初始化上传后返回的id主键
+        var demoListView = $('#demoList')
+            ,uploadListIns = upload.render({
+            elem: '#testList'
+            ,url: host_url+'index.php/Admin/MessageEmail/uploadFile?from_id='+window.sessionStorage.getItem("UID") //改成您自己的上传接口
+            ,accept: 'file'
+            ,multiple: false
+            ,auto:true
+            ,before:function (obj) {
+                uploadLoadingIndex = layer.load(1, {
+                    shade: [0.5,'#cccccc'] //0.1透明度的白色背景
+                });
+                // console.log(obj);
+                //读取本地文件
+                obj.preview(function(index, file, result){
+                    // console.log(file); //得到文件对象
+                    // console.log(file.name)
+                    // console.log(file.size)
+                    let str = "文件: "+file.name +"   大小: "+(file.size/1024).toFixed(1)+"KB";
+                    $(".uploadFileName").val(str);
+                });
+            }
+            ,done: function(res, index, upload){
+                layer.close(uploadLoadingIndex);
+                if(res.code == 200){ //上传成功
+                    upload_id = res.data.id;
+                    console.log("上传返回的id主键："+upload_id)
+                    layer.msg("上传成功",{icon:1});
+                }else {
+                    layer.msg("上传失败",{icon:5});
+                }
+            }
+            ,error: function(index, upload){
+                layer.close(uploadLoadingIndex);
+                layer.msg("上传失败",{icon:5});
+            }
+        });
+
+
+        //表单提交
+        $("#submit").bind('click',function () {
+            var submitLoadingIndex = top.layer.msg('发送中，请稍后...',{icon: 16,time:false,shade:0.8});
+
+            let addressee_ids = $("#addressee_ids").val();
+            let subject = $("#subject").val();
+            let content = editor.txt.html();
+            var obj = {
+                "to_id" : addressee_ids,
+                "from_id" : window.sessionStorage.getItem("UID"),
+                "subject": subject,
+                "content": content,
+            };
+            if(upload_id){ //若用户上传附件
+                obj.id = upload_id;
+                upload_id = null;//用完删除
+            }
+            if(addressee_ids && subject && content){
+                console.log(addressee_ids+","+subject+","+content)
+                $.post(host_url+'index.php/Admin/MessageEmail/writeEmail',
+                    obj,
+                    function (json) {
+                        if(json.code == 200){
+                            setTimeout(()=>{
+                                layer.close(submitLoadingIndex);
+                                formReset();//清空表单
+                                layer.msg("发送成功",{icon:1});
+                            },1000);
+                        }else {
+                            setTimeout(()=>{
+                                layer.close(submitLoadingIndex);
+                                layer.msg("发送失败!",{icon:5});
+                            },1000);
+                        }
+                    }
+                );
+            }else {
+                top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8})
+                layer.msg("发件人,主题,正文内容 必填!!!",{icon:7});
+                if(!addressee_ids){
+                    setTimeout(()=>{
+                        $("#addressee").focus();
+                    },500)
+                }else {
+                    $("#subject").focus();
+                }
+            }
+
+        });
+
+        //监听重置按钮
+        $("#reset").bind('click',function () {
+            formReset();//清空表单
+        });
+
+        //清空表单方法
+        function formReset() {
+            $("#addressee").val(null);
+            $("#addressee_ids").val(null);
+            $("#subject").val(null);
+            editor.txt.clear();//清空富文本内容
+        }
+        /**
+         *  写信---------------------------------结束
+         */
+    })
+</script>
+</body>
+</html>
