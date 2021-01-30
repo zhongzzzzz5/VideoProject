@@ -36,7 +36,7 @@
                 ,height : "full-70"
                 ,cellMinWidth : 95
                 ,width:'100%'
-                ,url: host_url+'index.php/Admin/MessageEmail/writeEmail' //数据接口
+                ,url: host_url+'index.php/Admin/MessageEmail/addressBook?id='+window.sessionStorage.getItem("UID") //数据接口
                 ,page: true //开启分页
                 ,cols: [[ //表头
                     {type: "checkbox", fixed:"left", width:50},

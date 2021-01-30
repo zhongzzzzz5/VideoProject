@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../../../css/public.css" media="all" />
     <link rel="stylesheet" href="http://at.alicdn.com/t/font_2289172_hj8hlv6el5.css">
 </head>
-<body>
+<body class="childrenBody">
 
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 10px;">
     <legend>写信</legend>
@@ -162,7 +162,7 @@
                 upload_id = null;//用完删除
             }
             if(addressee_ids && subject && content){
-                console.log(addressee_ids+","+subject+","+content)
+                //console.log(addressee_ids+","+subject+","+content)
                 $.post(host_url+'index.php/Admin/MessageEmail/writeEmail',
                     obj,
                     function (json) {
