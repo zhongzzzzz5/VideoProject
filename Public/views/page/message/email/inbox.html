@@ -22,7 +22,7 @@
     </div>
     <table id="inbox" lay-filter="inbox"></table>
     <script type="text/html" id="inboxBar">
-        <button class="layui-btn layui-btn-xs" lay-event="read" style="margin-top: 3px">查看</button>
+        <button class="layui-btn layui-btn-xs" lay-event="read"><i class="layui-icon">&#xe705;</i>查看</button>
     </script>
 </from>
 
@@ -35,6 +35,11 @@
                 $ = layui.jquery,
                 table = layui.table ,
                 layer = parent.layer === undefined ? layui.layer : top.layer;
+            //显示loading
+            var pageLoading = layui.layer.load(2, {shade: false});
+            setTimeout(()=>{
+                layui.layer.close(pageLoading);
+            },200);
 
             /**
              *  收件箱*********************************开始
@@ -45,38 +50,46 @@
                 page:true,
                 id:"inboxTable",
                 async: false,
-                height : "full-40",
+                height : "full-60",
                 cols : [[
                     {type: "checkbox", fixed:"left", width:50},
                     {field: 'id', title: '序号', width:60, align:"center"},
-                    {field: 'from_username', title: '发件人',align:'center'},
-                    {field: 'subject', title: '主题', align:'center'},
-                    {field: 'file_name', title: '附件',  align:'center',templet:function (d) {
+                    {field: 'from_username', title: '发件人',width:130,align:'center'},
+                    {field: 'subject', title: '主题',width:150, align:'center',templet:function (d) {
+                            return d.subject.length>5?d.subject.substring(0,5)+"...":d.subject;
+                        }},
+                    {field: 'file_name', title: '附件', width:150, align:'center',templet:function (d) {
                             return d.file_name?d.file_name:"<span style='color:#cccccc;'>无</span>";
                         }},
-                    {field: 'content', title: '内容', align:'center',templet:function (d) {
-                            return d.content.substring(0,10);
-                        }},
-                    {field: 'add_time', title: '发送时间', align:'center'},
                     {field: 'is_read', title: '状态', align:'center',templet:function (d) {
-                            return d.is_read == 0?"<span>未读</span>":"<span style='color:#cccccc;'>已读</span>"
+                            return d.is_read == 0?"<span style='color:#FF5722'>未读</span>":"<span style='color:#cccccc;'>已读</span>"
                         }},
-                    {title: '操作', minWidth:30, templet:'#inboxBar',fixed:"right",align:"center",width: 100}
+                    {field: 'add_time', title: '发送时间',width:150, align:'center'},
+                    {title: '操作', minWidth:30, templet:'#inboxBar',fixed:"right",align:"center",width: 150}
                 ]]
             });
-
+            //工具栏事件监听
             table.on('tool(inbox)',function (obj) {
                 var layEvent = obj.event,
                     data = obj.data;
-                if(layEvent === 'read'){
-                    console.log(data);
+                if(layEvent === 'read'){ //查看邮件
+                    //console.log(data);
                     layer.open({
                         type: 2,
-                        title: data.subject,
+                        title: "时间："+data.add_time,
                         shadeClose: true,
                         shade: 0.5,
-                        area: ['380px', '90%'],
-                        content: 'mobile/' //iframe的url
+                        area: ['580px', '90%'],
+                        content: 'page/message/email/read_email.html', //iframe的url
+                        success:function () {
+                            window.sessionStorage.setItem("temp_readData",JSON.stringify(data));
+                        },
+                        end:function () {
+                            //如果状态是未读，用户关闭layer后执行刷新表格
+                            if(data.is_read == 0){
+                                inboxTableIns.reload();
+                            }
+                        }
                     });
                 }
             });
@@ -98,19 +111,43 @@
                     for (var i in data) {
                         ids.push(data[i].id);
                     }
-                    $.post(host_url+"index.php/Admin/MessageEmail/deleteEmail",
-                        {
-                            "ids" : ids
-                        },
-                        function (json) {
 
-                        }
-                    );
+                    let isDeleteIndex = layer.confirm('确认删除所选的项？', {
+                        btn: ['是','否'] //按钮
+                    }, function(){
+                        let index = top.layer.msg('操作中，请稍等...',{icon: 16,time:false,shade:0.5});
+                        $.post(host_url+"index.php/Admin/MessageEmail/hideEmail",
+                            {
+                                "ids" : ids
+                            },
+                            function (json) {
+                                if(json.code == 200){
+                                    setTimeout(()=>{
+                                        layer.close(index);
+                                        layer.msg("删除成功",{icon:1});
+                                        inboxTableIns.reload();
+                                    },500);
+                                }else {
+                                    setTimeout(()=>{
+                                        layer.close(index);
+                                        layer.msg("删除失败",{icon:5});
+                                        inboxTableIns.reload();
+                                    },500);
+                                }
+                            }
+                        );
+                    },function () {
+                        layer.close(isDeleteIndex);
+                    });
                 }else {
-                    layui.layer.msg("请选择需要删除的项",{icon:7});
+                    layui.layer.msg("请选择需要删除的项",{icon:7,time: 500});
                 }
-                console.log(ids)
             });
+
+            //定时刷新表格 10分钟刷新一次
+            window.setInterval(()=>{
+                inboxTableIns.reload();
+            },60000)
 
         })
 

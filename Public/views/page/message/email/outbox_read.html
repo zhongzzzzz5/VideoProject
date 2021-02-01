@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="../../../layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="../../../css/public.css" media="all" />
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_2289172_hj8hlv6el5.css">
+    <style>
+        .layui-input{
+
+        }
+    </style>
+</head>
+<body class="childrenBody">
+<form class="layui-form layui-form-pane" style="padding: 20px">
+
+
+    <div class="layui-form-item" id="from_usernameBox">
+        <label class="layui-form-label">收件人</label>
+        <div class="layui-input-block">
+            <input type="text" id="to_username" autocomplete="off" class="layui-input layui-disabled" disabled>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">主题</label>
+        <div class="layui-input-block">
+            <input type="text" id="subject" autocomplete="off" class="layui-input layui-disabled" disabled>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">附件</label>
+        <div class="layui-input-block">
+            <input type="text" id="file_name" autocomplete="off" class="layui-input layui-disabled" disabled style="float: left;width: 75%;">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div id="editor" style="width: 100%; height: 300px"></div>
+    </div>
+</form>
+
+
+<script type="text/javascript" src="../../../common_config/common.js"></script>
+<script type="text/javascript" src="../../../layui/layui.js"></script>
+<script type="text/javascript" src="../../../plugin/wangEditor/wangEditor.min.js"></script>
+<script type="text/javascript">
+    const E = window.wangEditor
+    const editor = new E('#editor')
+    // 或者 const editor = new E( document.getElementById('editor') )
+    // 配置菜单栏，删减菜单，调整顺序
+    editor.config.menus = [
+        'bold',
+        'head',
+        'italic',
+        'underline'
+    ]
+    editor.create();
+
+    layui.use(['form','jquery','layer'],function () {
+        var $ = layui.jquery, from = layui.form, layer = parent.layer === undefined ? layui.layer : top.layer;
+
+        formData();//填充表单
+
+        $("#downloadFile").click(function () {
+            let id = $(this).attr("data-val");
+            let index = layer.confirm('是否立即执行下载？', {
+                btn: ['确认','取消'] //按钮
+            }, function(){
+                window.location.href = host_url+"index.php/Admin/MessageEmail/downloadFile?id="+id;
+                layer.close(index);
+            });
+        });
+
+        //填充表单方法
+        function formData() {
+            var data = JSON.parse(window.sessionStorage.getItem("temp_outboxData"));
+            window.sessionStorage.removeItem("temp_outboxData");
+            console.log(data)
+            $("#to_username").val(data.to_username);
+            $("#subject").val(data.subject);
+            if(data.file_name){
+                $("#file_name").val(data.file_name).after("<button class='layui-btn layui-btn-primary' id='downloadFile' data-val='"+data.id+"' type='button' style='float: left;width: 25%;'>下载附件</button>");
+            }else {
+                $("#file_name").val("无附件").css({"width":"100%"});
+            }
+            editor.txt.html(data.content) // 重新设置编辑器内容
+
+        }
+    })
+
+</script>
+</body>
+</html>

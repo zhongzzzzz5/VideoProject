@@ -24,7 +24,7 @@
         }
 
         .main-box{
-            height: 520px;
+            height: 500px;
             overflow-y: auto
         }
     </style>
@@ -38,26 +38,21 @@
                     <li><button data-htmlsrc="write.html" id="write-bt" class="myBt layui-btn layui-btn-normal"><i class="layui-icon">&#xe642;</i> 写&nbsp&nbsp&nbsp信</button></li>
                     <li><button data-htmlsrc="outbox.html" id="outbox-bt" class="myBt layui-btn"><i class="iconfont icon-fajianxiang"></i> 发件箱</button></li>
                     <li><button data-htmlsrc="inbox.html" id="inbox-bt" class="myBt layui-btn"><i class="iconfont icon-shoujianxiang"></i> 收件箱</button></li>
+                    <li><button data-htmlsrc="draft.html" id="draft" class="myBt layui-btn"><i class="layui-icon">&#xe6b2;</i> 草稿箱</button></li>
                     <li><button data-htmlsrc="home.html" id="home" class="myBt layui-btn"><i class="layui-icon">&#xe68e;</i> Home</button></li>
                 </ul>
             </div>
+            <iframe src="email_music.html" frameborder="0" width="80%" height="300px" style="border: 1px solid #ccc;overflow-y: auto;overflow-x: hidden"></iframe>
         </div>
         <div class="layui-col-md9" style="background-color:#fff;padding: 20px">
             <div class="main-box" style="display: block">
-                <iframe id="frame-main" src="inbox.html" frameborder="0" width="100%" height="99%"></iframe>
+                <iframe id="frame-main" src="home.html" frameborder="0" width="100%" height="99%"></iframe>
             </div>
         </div>
     </div>
 </div>
 <script type="text/javascript" src="../../../common_config/common.js"></script>
 <script type="text/javascript" src="../../../layui/layui.js"></script>
-<script type="text/javascript" src="../../../plugin/wangEditor/wangEditor.min.js"></script>
-<script type="text/javascript">
-    const E = window.wangEditor
-    const editor = new E('#editor')
-    // 或者 const editor = new E( document.getElementById('editor') )
-    editor.create()
-</script>
 <script type="text/javascript" src="email.js"></script>
 </body>
 </html>

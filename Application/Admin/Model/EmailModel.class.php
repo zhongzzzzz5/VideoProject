@@ -98,7 +98,7 @@ class EmailModel extends Model{
     }
 
     /**
-     *  删除数据
+     *  删除数据(多个)
      * @param $ids_str
      * @return bool|int|mixed|string
      */
@@ -116,6 +116,50 @@ class EmailModel extends Model{
             }else{
                 return false;
             }
+        }else{
+            return false;
+        }
+    }
+
+    /**
+     *  删除数据(单个)
+     * @param $id
+     * @return bool
+     */
+    public function deleteOneData($id){
+        if($id){
+            $data = $this->find($id);
+            $result = $this->delete($id);
+            if($result){
+                if($data["file_path"]){
+                    delDirAndFile(WORKING_PATH.$data["file_path"],false);
+                }
+                return $result;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }
+
+    /**
+     *  隐藏邮件
+     * @param $ids_arr
+     * @return bool
+     */
+    public function hideData($ids_arr){
+        if($ids_arr){
+            $arr = [];//存数据
+            for($i=0; $i<count($ids_arr); $i++){
+                $arr["id"] = $ids_arr[$i];
+                $arr["is_hide"] = 1;
+                $result = $this->save($arr);
+                if(!$result){ //如果失败，则直接return
+                    return false;
+                }
+            }
+            return true;
         }else{
             return false;
         }

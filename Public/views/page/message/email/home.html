@@ -3,8 +3,171 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="../../../layui/css/layui.css" media="all" />
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!--    自己的阿里图标-->
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_2289172_hj8hlv6el5.css">
+    <style>
+        .el-icon-message,.el-icon-s-promotion{
+            transition: 0.2s all;
+        }
+        .el-icon-message:hover{
+            color: #1E9FFF;
+        }
+        .el-icon-s-promotion:hover{
+            color: #1AA094;
+        }
+        #uface{
+            transition: 0.2s all;
+        }
+        #uface:hover{
+            opacity: 0.5;
+        }
+    </style>
 </head>
 <body class="childrenBody">
-home
+<div id="app">
+    <div v-loading="loading">
+<!--        加template标签，可以使页面加载时不显示Vue的{{}} -->
+        <template>
+        <el-row>
+            <el-col :span="3">
+                <el-col :span="12">
+                    <div class="demo-basic--circle">
+                        <div id="uface" style="cursor: pointer" class="block"><el-avatar :size="80" :src="uface"></el-avatar></div>
+                    </div>
+                </el-col>
+            </el-col>
+            <el-col :span="13">
+                <div>
+                    <span><span style="font-size: 13px">{{nowStr}}好！{{username}}，</span><span style="font-family: 仿宋">{{randomSay}}</span></span>
+                    <el-divider></el-divider>
+                    <el-row>
+                        <el-col :span="5">
+                            <el-badge :value="unReadEmailNum" class="item" style="text-align: center">
+                                <i class="el-icon-message" style="font-size: 35px;cursor: pointer"></i>
+                                <div style="font-size: 13px;color:#c2c2c2">未读邮件</div>
+                            </el-badge>
+                        </el-col>
+                        <el-col :span="5">
+                            <el-badge :value="sendNum" class="item" style="text-align: center">
+                                <i class="el-icon-s-promotion" style="font-size: 35px;cursor: pointer"></i>
+                                <div style="font-size: 13px;color:#c2c2c2">已发送</div>
+                            </el-badge>
+                        </el-col>
+
+                    </el-row>
+                </div>
+            </el-col>
+            <el-col :span="8">
+
+            </el-col>
+        </el-row>
+        <br><br><br>
+        <el-row>
+            <el-col :span="24">
+                <div>
+                    <el-calendar v-model="value">
+                    </el-calendar>
+                </div>
+            </el-col>
+        </el-row>
+        </template>
+    </div>
+</div>
+<script type="text/javascript" src="../../../common_config/common.js"></script>
+<script type="text/javascript" src="../../../layui/layui.js"></script>
+<!-- 引入组件库 -->
+<script src="../../../plugin/element_ui/Vue.js"></script>
+<script src="../../../plugin/element_ui/element_index.js"></script>
+<script src="../../../plugin/element_ui/axios.js"></script>
+<script>
+    layui.use(['layer','jquery'],function () {
+        var $ = layui.jquery,
+            layer = parent.layer === undefined ? layui.layer : top.layer;
+        $("#uface").click(function () {
+            layer.open({
+                type: 2,
+                title: '个人信息',
+                shadeClose: true,
+                shade: 0.8,
+                area: ['580px', '90%'],
+                content: 'page/user/userInfo.html', //iframe的url
+            });
+        });
+    });
+</script>
+<script>
+    window.onload = function () {
+        new Vue({
+            el:'#app',
+            data:{
+                loading:true,
+                uface: "",
+                username:"",
+                value: new Date(),
+                unReadEmailNum : 0,//未读的邮件数量
+                sendNum:0,//已发送的数量
+                nowStr:"",//早上，下午，晚上
+                randomSay:"",//随机语录
+            },
+            created:function () {
+                var that = this;
+                window.setTimeout(function () {
+                    that.loading = false;
+                },500);
+                this.username = window.sessionStorage.getItem("UNAME");
+                this.uface = window.sessionStorage.getItem("UFACE")!=0?window.sessionStorage.getItem("UFACE"):"https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png";
+                this.getData();
+            },
+            methods: {
+                //方法
+                getData:function(){
+                    this.requestEmailNum();
+                    window.setInterval(()=>{
+                        this.requestEmailNum();
+                    },6000)
+                    this.nowStr = this.getNowData();
+                    this.requestSay();
+                },
+
+                //请求未读邮件
+                requestEmailNum:function () {
+                    var that = this;
+                    axios.get(host_url+"index.php/Admin/MessageEmail/emailNum?id="+window.sessionStorage.getItem("UID")).then(function (result) {
+                        // console.log(result.data.data)
+                        if(result.data.code == 200){
+                            that.unReadEmailNum = result.data.data.unread_count;
+                            that.sendNum = result.data.data.send_count;
+                        }else {
+                            console.log("出现错误")
+                        }
+                    });
+                },
+                //请求随机语录
+                requestSay:function(){
+                    axios.get("http://api.btstu.cn/yan/api.php?charset=utf-8").then((result)=>{
+                        // console.log(result.data)
+                        this.randomSay = result.data;
+                    });
+                },
+                //获取当前时间
+                getNowData:function () {
+                    var dateObj = new Date(); //表示当前系统时间的Date对象
+                    var hour = dateObj.getHours(); //当前系统时间的小时值
+                    var timeValue = "" +((hour >= 12) ? (hour >= 18) ? "晚上" : "下午" : "上午" ); //当前时间属于上午、晚上还是下午
+                    return timeValue;
+                }
+            }
+        });
+    }
+</script>
 </body>
 </html>

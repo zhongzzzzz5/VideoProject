@@ -62,11 +62,16 @@
             $ = layui.jquery,
             table = layui.table ,
             layer = parent.layer === undefined ? layui.layer : top.layer;
-        //显示loading
-        var pageLoading = layui.layer.load(2, {shade: false});
-        setTimeout(()=>{
-            layui.layer.close(pageLoading);
-        },200);
+
+        var temp_draftData = JSON.parse(window.sessionStorage.getItem("temp_draftData"));
+        window.sessionStorage.removeItem("temp_draftData");
+        formData();//执行填充表单
+        //填充表单方法
+        function formData() {
+            $(".uploadFileName").val(temp_draftData.file_name);
+        }
+
+
 
         /**
          *   写信---------------------------开始
@@ -80,7 +85,7 @@
                 shadeClose: true,
                 shade: 0.1,
                 area: ['420px', '420px'],
-                content: 'page/message/email/email_table.html',
+                content: 'email_table.html',
                 end:function () {
                     if(window.sessionStorage.getItem("okObj")){
                         var okObj = JSON.parse(window.sessionStorage.getItem("okObj"));
@@ -107,14 +112,13 @@
         });
 
 
-
         //附件上传
         var uploadLoadingIndex = null;//初始化loading索引
-        var upload_id = null;//初始化上传后返回的id主键
+        var upload_id = temp_draftData.id;//初始化id主键
         var demoListView = $('#demoList')
             ,uploadListIns = upload.render({
             elem: '#testList'
-            ,url: host_url+'index.php/Admin/MessageEmail/uploadFile?from_id='+window.sessionStorage.getItem("UID") //改成您自己的上传接口
+            ,url: host_url+'index.php/Admin/MessageEmail/editUploadFile?id='+upload_id //改成您自己的上传接口
             ,accept: 'file'
             ,multiple: false
             ,auto:true
@@ -167,22 +171,22 @@
                 upload_id = null;//用完删除
             }
             if(addressee_ids && subject && content){
-                //console.log(addressee_ids+","+subject+","+content)
-                $.post(host_url+'index.php/Admin/MessageEmail/writeEmail',
+                console.log(obj);
+                $.post(host_url+'index.php/Admin/MessageEmail/editDraftEmail',
                     obj,
                     function (json) {
                         if(json.code == 200){
                             setTimeout(()=>{
-                                layer.close(submitLoadingIndex);
+                                top.layer.close(submitLoadingIndex);
                                 formReset();//清空表单
-                                layer.msg("发送成功，正在跳转到首页",{icon:1});
+                                layer.msg("发送成功,正在跳转到首页",{icon:1});
                                 setTimeout(()=>{
                                     top.location= "../../../index.html";
                                 },1000)
                             },1000);
                         }else {
                             setTimeout(()=>{
-                                layer.close(submitLoadingIndex);
+                                top.layer.close(submitLoadingIndex);
                                 layer.msg("发送失败!",{icon:5});
                                 setTimeout(()=>{
                                     top.location= "../../../index.html";
@@ -192,7 +196,7 @@
                     }
                 );
             }else {
-                layer.close(submitLoadingIndex);
+                top.layer.close(submitLoadingIndex);
                 layer.msg("发件人,主题,正文内容 必填!!!",{icon:7});
                 if(!addressee_ids){
                     setTimeout(()=>{
