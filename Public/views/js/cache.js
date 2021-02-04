@@ -87,12 +87,7 @@ layui.use(['form','jquery',"layer"],function() {
             window.sessionStorage.setItem("lockcms",true);
             lockPage();
         }else {
-            layer.open({
-                type: 1,
-                //skin: 'layui-layer-rim', //加上边框
-                area: ['350px', '200px'], //宽高
-                content: '<div style="position: absolute;top: 30%;left: 18%;font-size: 25px"><span>请先去设置锁屏密码</span></div>'
-            });
+            layer.msg("请先去设置锁屏密码",{icon:7});
         }
     })
     // 判断是否显示锁屏

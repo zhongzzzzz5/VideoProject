@@ -3,6 +3,11 @@ namespace Libs\Action;
 
 use Org\PHPMailer\PHPMailer;
 
+/**
+ * Class Email
+ * @package Libs\Action
+ * @describe 邮件处理类
+ */
 class Email{
     //服务器配置,qq服务器
     /**

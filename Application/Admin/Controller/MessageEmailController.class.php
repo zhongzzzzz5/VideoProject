@@ -2,6 +2,7 @@
 namespace Admin\Controller;
 use Admin\Model\EmailModel;
 use Admin\Model\UserModel;
+use Libs\Action\FileProcessor;
 use Think\Controller;
 use Think\Upload;
 
@@ -194,11 +195,7 @@ class MessageEmailController extends Controller{
             if($data){
                 //文件下载
                 $file = WORKING_PATH.$data['file_path']; //需要下载的文件路径
-                //下面的写法是固定的
-                header("Content-type: application/octet-stream");
-                header('Content-Disposition: attachment; filename="' . basename($file) . '"');
-                header("Content-Length: ". filesize($file));
-                readfile($file);
+                FileProcessor::downloadFile($file);
             }else{
                 echo "出错了";
             }
