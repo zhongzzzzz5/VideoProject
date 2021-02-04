@@ -53,27 +53,27 @@ layui.use(['form','jquery',"layer"],function() {
         showNotice();
     })
 
-    //未读邮件
-    $(".unreadMail").click(function () {
+    //聊天
+    $(".chat").click(function () {
         layer.open({
             type: 2,
-            title: "便签",
-            closeBtn: 0, //不显示关闭按钮
-            shade: [0.3,"#c2c2c2"],
-            shadeClose:true,
-            area: ['340px', '515px'],
-            offset: 'rb', //右下角弹出
+            title: '很多时候，我们想最大化看，比如像这个页面。',
+            shadeClose: true,
+            shade: [0.3,"#393D49"],
+            offset:'rb',
             anim: 2,
-            content: ['page/local_note/local_note.html'], //iframe的url，no代表不显示滚动条
+            maxmin: true, //开启最大化最小化按钮
+            area: ['350px', '500px'],
+            content: '//fly.layui.com/'
         });
     });
 
     //本地便签
-    var local_note_text = "";
     var json = {
         id : window.sessionStorage.getItem("UID"),
         username: window.sessionStorage.getItem("UNAME"),
     }
+    var noteJqObj = null;
     $(".localNote").click(function () {
         layer.open({
             type: 1,
@@ -88,20 +88,29 @@ layui.use(['form','jquery',"layer"],function() {
                 let local_data = JSON.parse(decodeURI(window.localStorage.getItem("local_data_"+window.sessionStorage.getItem("UID"))));
                 // console.log(local_data);
                 if(local_data){
-                    local_note_text = local_data.local_note_text;
-                    $("#localNote").val(local_note_text);
+                    $("#localNote").val(local_data.local_note_text);
                 }
-                $(document).keyup(function () {
-                    local_note_text = $("#localNote").val();
-                });
+                noteJqObj = $("#localNote");
             },
             end:function () {
-                json.local_note_text = local_note_text;
+                json.local_note_text = noteJqObj.val();
                 // console.log(json.local_note_text);
                 window.localStorage.setItem("local_data_"+window.sessionStorage.getItem("UID"),encodeURI(JSON.stringify(json)));
+                isHasNote();
             }
         });
     });
+
+    //判断是否有便签内容，有则修改图标相应的颜色
+    isHasNote();
+    function isHasNote() {
+        if(JSON.parse(decodeURI(window.localStorage.getItem("local_data_"+window.sessionStorage.getItem("UID"))))){
+            let data = JSON.parse(decodeURI(window.localStorage.getItem("local_data_"+window.sessionStorage.getItem("UID"))));
+            data.local_note_text?$("#localNote-icon").css({"color":"#FF5722"}):$("#localNote-icon").css({"color":"#ffffff"});
+        }else {
+            $("#localNote-icon").css({"color":"#ffffff"});
+        }
+    }
 
     //锁屏
     function lockPage(){
@@ -137,7 +146,7 @@ layui.use(['form','jquery',"layer"],function() {
             window.sessionStorage.setItem("lockcms",true);
             lockPage();
         }else {
-            layer.msg("请先去设置锁屏密码",{icon:7,anim: 6});
+            layer.msg("请先去设置锁屏密码",{icon:7,shade:[0.7,'#393D49'],shadeClose:true,anim: 6});
         }
     })
     // 判断是否显示锁屏
@@ -150,7 +159,7 @@ layui.use(['form','jquery',"layer"],function() {
             layer.msg("请输入解锁密码！");
             $(this).siblings(".admin-header-lock-input").focus();
         }else{
-            if($(this).siblings(".admin-header-lock-input").val() == window.sessionStorage.getItem("lock_password")){
+            if(md5($(this).siblings(".admin-header-lock-input").val()) == window.sessionStorage.getItem("lock_password")){
                 window.sessionStorage.setItem("lockcms",false);
                 $(this).siblings(".admin-header-lock-input").val('');
                 layer.closeAll("page");

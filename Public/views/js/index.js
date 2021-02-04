@@ -96,24 +96,31 @@ layui.use(['bodyTab','form','element','layer','jquery'],function(){
 
 	//清除缓存
 	$(".clearCache").click(function(){
-		$.get(host_url+"index.php/Admin/Public/logout?id="+window.sessionStorage.getItem("UID"),function (json) {
-			if(json.code == 200){
-				//先清localStorage再清sessionStorage
-				window.localStorage.removeItem("local_data_"+window.sessionStorage.getItem("UID"));
-				window.sessionStorage.clear();
-				var index = layer.msg('清除缓存中，请稍候',{icon: 16,time:false,shade:0.8});
-				setTimeout(function(){
-					layer.close(index);
-					layer.msg("缓存清除成功！你必须再重新登录！",{icon: 1});
-					setTimeout(function () {
-						//跳转到登录页
-						window.location.href = "page/login/login.html";
-					},3000)
-				},1000);
-			}else {
-				layer.alert('出现未知错误!与服务器连接中断', {
-					skin: 'layui-layer-molv' //样式类名
-					,closeBtn: 0
+		layer.msg('清除缓存并重新登录？', {
+			time: 0 //不自动关闭
+			,btn: ['俺确定', '俺取消']
+			,yes: function(index){
+				layer.close(index);
+				$.get(host_url+"index.php/Admin/Public/logout?id="+window.sessionStorage.getItem("UID"),function (json) {
+					if(json.code == 200){
+						//先清localStorage再清sessionStorage
+						window.localStorage.removeItem("local_data_"+window.sessionStorage.getItem("UID"));
+						window.sessionStorage.clear();
+						var index = layer.msg('清除缓存中，请稍候',{icon: 16,time:false,shade:0.8});
+						setTimeout(function(){
+							layer.close(index);
+							layer.msg("缓存清除成功！你必须再重新登录！",{icon: 1});
+							setTimeout(function () {
+								//跳转到登录页
+								window.location.href = "page/login/login.html";
+							},3000)
+						},1000);
+					}else {
+						layer.alert('出现未知错误!与服务器连接中断', {
+							skin: 'layui-layer-molv' //样式类名
+							,closeBtn: 0
+						});
+					}
 				});
 			}
 		});

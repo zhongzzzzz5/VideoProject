@@ -118,4 +118,5 @@ class Email{
     public function getSendError(){
         return $this->sendError?$this->sendError:false;
     }
+
 }

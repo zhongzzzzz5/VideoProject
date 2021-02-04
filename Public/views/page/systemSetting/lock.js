@@ -4,7 +4,7 @@ layui.use(['form','layer','jquery'],function(){
     $("#submit").bind("click",function () {
         if($("#password").val()&&$("#password1").val()){
             if($("#password").val() == $("#password1").val()){
-                window.sessionStorage.setItem("lock_password",$("#password").val());
+                window.sessionStorage.setItem("lock_password",md5($("#password").val()));
                 if($("#describe").val()){
                     window.sessionStorage.setItem("lock_describe",$("#describe").val());
                 }
