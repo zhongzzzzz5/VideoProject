@@ -53,6 +53,56 @@ layui.use(['form','jquery',"layer"],function() {
         showNotice();
     })
 
+    //未读邮件
+    $(".unreadMail").click(function () {
+        layer.open({
+            type: 2,
+            title: "便签",
+            closeBtn: 0, //不显示关闭按钮
+            shade: [0.3,"#c2c2c2"],
+            shadeClose:true,
+            area: ['340px', '515px'],
+            offset: 'rb', //右下角弹出
+            anim: 2,
+            content: ['page/local_note/local_note.html'], //iframe的url，no代表不显示滚动条
+        });
+    });
+
+    //本地便签
+    var local_note_text = "";
+    var json = {
+        id : window.sessionStorage.getItem("UID"),
+        username: window.sessionStorage.getItem("UNAME"),
+    }
+    $(".localNote").click(function () {
+        layer.open({
+            type: 1,
+            title: ["便签","background-color:#20222A;color:#ffffff"],
+            shadeClose: true,
+            shade: 0.1,
+            anim: 2,
+            offset: ['40px', '53%'],
+            area: ['380px', '300px'],
+            content: '<div style="width: 100%;height: 100%;overflow: hidden;"><textarea style="width: 100%;height: 100%;border: none;color: #666;box-sizing: border-box;padding: 10px" id="localNote" cols="30" placeholder="内容" rows="10"></textarea></div>',
+            success:function () {
+                let local_data = JSON.parse(decodeURI(window.localStorage.getItem("local_data_"+window.sessionStorage.getItem("UID"))));
+                // console.log(local_data);
+                if(local_data){
+                    local_note_text = local_data.local_note_text;
+                    $("#localNote").val(local_note_text);
+                }
+                $(document).keyup(function () {
+                    local_note_text = $("#localNote").val();
+                });
+            },
+            end:function () {
+                json.local_note_text = local_note_text;
+                // console.log(json.local_note_text);
+                window.localStorage.setItem("local_data_"+window.sessionStorage.getItem("UID"),encodeURI(JSON.stringify(json)));
+            }
+        });
+    });
+
     //锁屏
     function lockPage(){
         layer.open({
@@ -87,7 +137,7 @@ layui.use(['form','jquery',"layer"],function() {
             window.sessionStorage.setItem("lockcms",true);
             lockPage();
         }else {
-            layer.msg("请先去设置锁屏密码",{icon:7});
+            layer.msg("请先去设置锁屏密码",{icon:7,anim: 6});
         }
     })
     // 判断是否显示锁屏

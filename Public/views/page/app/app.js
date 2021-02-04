@@ -112,7 +112,7 @@ layui.use(['form','layer','laydate','table','upload'],function(){
                 id_arr.push(data[i].id);
             }
             //console.log(id_arr)
-            layer.confirm('确定删除选中的友链？', {icon: 3, title: '提示信息'}, function (index) {
+            layer.confirm('确定删除？', {icon: 3, title: '提示信息'}, function (index) {
                 $.post(host_url+"index.php/Admin/AppManagement/deleteAppArr",{
                     id_arr : id_arr  //将需要删除的linkId作为参数传入
                 },function(json){
@@ -133,7 +133,7 @@ layui.use(['form','layer','laydate','table','upload'],function(){
                 })
             })
         }else{
-            layer.msg("请选择需要删除的文章");
+            layer.msg("请选择需要删除的数据");
         }
     });
 

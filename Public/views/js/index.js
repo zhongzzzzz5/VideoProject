@@ -98,8 +98,9 @@ layui.use(['bodyTab','form','element','layer','jquery'],function(){
 	$(".clearCache").click(function(){
 		$.get(host_url+"index.php/Admin/Public/logout?id="+window.sessionStorage.getItem("UID"),function (json) {
 			if(json.code == 200){
+				//先清localStorage再清sessionStorage
+				window.localStorage.removeItem("local_data_"+window.sessionStorage.getItem("UID"));
 				window.sessionStorage.clear();
-				window.localStorage.clear();
 				var index = layer.msg('清除缓存中，请稍候',{icon: 16,time:false,shade:0.8});
 				setTimeout(function(){
 					layer.close(index);
