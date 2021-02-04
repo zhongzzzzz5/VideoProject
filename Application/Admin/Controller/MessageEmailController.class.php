@@ -195,7 +195,7 @@ class MessageEmailController extends Controller{
             if($data){
                 //文件下载
                 $file = WORKING_PATH.$data['file_path']; //需要下载的文件路径
-                FileProcessor::downloadFile($file);
+                FileProcessor::downloadFile($file);//执行文件下载渲染
             }else{
                 echo "出错了";
             }

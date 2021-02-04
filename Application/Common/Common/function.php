@@ -143,6 +143,19 @@ function delDirAndFile($path, $delDir = FALSE) {
 }
 
 /**
+ * 下载文件
+ * @param $file  ***文件的绝对路径
+ */
+function downloadFile($file){
+    //下面的写法是固定的
+    header("Content-type: application/octet-stream");
+    header('Content-Disposition: attachment; filename="' . basename($file) . '"');
+    header("Content-Length: ". filesize($file));
+    readfile($file);
+}
+
+
+/**
  * @param $birthday
  * @return bool|false|int
  *  根据生日计算年龄
