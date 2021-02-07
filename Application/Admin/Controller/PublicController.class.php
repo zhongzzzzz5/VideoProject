@@ -39,15 +39,24 @@ class PublicController extends Controller{
             $verify = new Verify();
             $checkResult = $verify->check($code);
             if($checkResult){
-                session("sessionResult",md5(time())) ;//凭证
-                $json = [
-                    "code"=>200,
-                    "msg"=>"ok",
-                    "data"=>[
-                        "checkResult"=> 1, //校验结果
-                        "sessionResult"=>session("sessionResult") //凭证
-                    ]
-                ];
+                $time = time();
+                $res = M("captcha")->add($arr = ['id'=>$time,'voucher'=>md5($time.$code)]);//凭证
+                if($res){
+                    $json = [
+                        "code"=>200,
+                        "msg"=>"ok",
+                        "data"=>[
+                            "checkResult"=> 1, //校验结果 1则表示成功
+                            "res_id"=>$time,//序号
+                            "voucher"=>M("captcha")->where("id='$time'")->find()["voucher"] //凭证
+                        ]
+                    ];
+                }else{
+                    $json = [
+                        "code"=>-1,
+                        "msg"=>"server error"
+                    ];
+                }
             }else{
                 $json = [
                     "code"=> -1,
@@ -67,15 +76,16 @@ class PublicController extends Controller{
             $post = I("post.");
             //校验验证码
             $checkResult = $post["checkResult"];
-            $sessionResult = $post["sessionResult"];
-            if($checkResult == "1" && session("sessionResult") == $sessionResult){ //验证凭证
+            $res_id = $post["res_id"];
+            $voucher = $post["voucher"];
+            if($checkResult == "1" && M("captcha")->where("id='$res_id'")->find()["voucher"] == $voucher){ //验证凭证
                 //登录
                 $username = $post['username'];
                 $password = $post['password'];
                 $user = new UserModel();
                 $result = $user->verifyLogin($username,$password);
                 if(!empty($result)){
-                    session("sessionResult",null);//清除已验证的凭证
+                    M("captcha")->where("id='$res_id'")->delete();//删除验证码数据
                     $checkLogin = new Login_infoModel();
                     $uid = $result["id"];
                     $dt = $checkLogin->where("uid = '$uid'")->find();
@@ -91,8 +101,8 @@ class PublicController extends Controller{
                     }else{
                         if($result["status_bool"] == 0 ){ //用户状态--正常
                             $res = $checkLogin->addData($result);
-                            $login_res = $checkLogin->find($result["id"]);//登录时间
-                            $login_time = $login_res["login_time"];
+                            $login_res = $checkLogin->find($result["id"]);
+                            $login_time = $login_res["login_time"];//登录时间
                             if($res){
 
 
@@ -118,31 +128,18 @@ class PublicController extends Controller{
 
 
 
-
-
-
-
-                                //持久存入用户信息到session
-                                session("id",$result["id"]);
-                                session("username",$result["username"]);
-                                if($result["head_img_path"]){
-                                    session("head_img_path",SERVER_URL.__ROOT__.$result["head_img_path"]);
-                                }else{
-                                    session("head_img_path",0);
-                                }
-                                session("role_id",$result["role_id"]);
                                 $userInfo = [
-                                    "UID"=>session("id"),
-                                    "UNAME"=>session("username"),
-                                    "UFACE"=>session("head_img_path"),
-                                    "ROLE"=>session("role_id"),
+                                    "UID"=>$result["id"],
+                                    "UNAME"=>$result["username"],
+                                    "UFACE"=>$result["head_img_path"]?SERVER_URL.__ROOT__.$result["head_img_path"]:0,
+                                    "ROLE"=>$result["role_id"],
                                 ];
                                 $json = [
                                     "code"=>200,
                                     "msg"=>"ok",
                                     "status_bool"=>0,
                                     "login_time"=>$login_time,
-                                    "data"=>$userInfo
+                                    "data"=>$userInfo,
                                 ];
                             }else{
                                 $json = [
@@ -173,8 +170,9 @@ class PublicController extends Controller{
                     "code"=>-1,
                     "msg"=>"code error",
                     "data"=>[
-                        $sessionResult,
-                        session("sessionResult")
+                        $checkResult,
+                        $res_id,
+                        $voucher
                     ]
                 ];
             }
@@ -203,20 +201,11 @@ class PublicController extends Controller{
                 $login_res = $login->find($data["id"]);//登录时间
                 $login_time = $login_res["login_time"];
                 if($new_res){
-                    //持久存入用户信息到session
-                    session("id",$data["id"]);
-                    session("username",$data["username"]);
-                    if($data["head_img_path"]){
-                        session("head_img_path",SERVER_URL.__ROOT__.$data["head_img_path"]);
-                    }else{
-                        session("head_img_path",0);
-                    }
-                    session("role_id",$data["role_id"]);
                     $userInfo = [
-                        "UID"=>session("id"),
-                        "UNAME"=>session("username"),
-                        "UFACE"=>session("head_img_path"),
-                        "ROLE"=>session("role_id"),
+                        "UID"=>$data["id"],
+                        "UNAME"=>$data["username"],
+                        "UFACE"=>$data["head_img_path"]?SERVER_URL.__ROOT__.$data["head_img_path"]:0,
+                        "ROLE"=>$data["role_id"],
                     ];
                     $json = [
                         "code"=>200,

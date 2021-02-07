@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="www.5wpz.top_db_video" uuid="f6bd4f35-812e-4c4e-8d36-ab7dc8d7185c">
+      <driver-ref>mysql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://119.29.15.197:3306/db_video</jdbc-url>
+    </data-source>
+  </component>
+</project>

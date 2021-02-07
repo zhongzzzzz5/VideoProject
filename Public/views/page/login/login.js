@@ -56,7 +56,8 @@
 
     //异步验证验证码
     const codeOldStyle = $("#code").css("border");//旧样式
-    var sessionResult = null;//定义凭证
+    var res_id = 0;//定义主键
+    var voucher = null;//定义凭证
     $(document).keyup(function(){
         if($("#code").val().length ==4){
             $.post(host_url+"index.php/Admin/Public/checkCode",
@@ -66,7 +67,8 @@
                 function (json) {
                     if(json.code == 200){
                         $("#checkResult").val(json.data.checkResult);//校验结果
-                        sessionResult = json.data.sessionResult;//凭证
+                        res_id = json.data.res_id;//主键
+                        voucher = json.data.voucher;//凭证
                         layer.msg('验证码正确', {icon: 1});
                         $("#code").css({"border":"1px solid #00d20d"});//验证码正确，改变边框样式
                         $("#imgCode").css({"pointer-events":"none"});//禁止点击验证码盒子
@@ -93,7 +95,7 @@
         var that = $(this);
         if(username && password){
             $.post(host_url+"index.php/Admin/Public/login",
-                {"username":username,"password":password,"checkResult":checkResult,"sessionResult":sessionResult},
+                {"username":username,"password":password,"checkResult":checkResult,"res_id":res_id,"voucher":voucher},
                 function (json) {
                     if(json.code == 200){
                         //账号密码正确，重置表单
