@@ -9,7 +9,7 @@ layui.use(['table','layer','jquery'],function(){
         url : host_url+"index.php/Admin/UserInfo/userOnline",
         cellMinWidth : 95,
         page : true,
-        height : "full-20",
+        height : "full-105",
         id : "systemLog",
         done: function(res, curr, count){
             //如果是异步请求数据方式，res即为你接口返回的信息。
@@ -73,9 +73,10 @@ layui.use(['table','layer','jquery'],function(){
         if(layEvent === 'lookImg'){
             layer.open({
                 type: 1,
-                skin: 'layui-layer-rim', //加上边框
+                title:false,
+                shadeClose:true,
                 area: ['270px', '270px'], //宽高
-                content: "<img width='200' style='padding: 25px' src='"+data.uface+"'/>"
+                content: "<img width='270' style='box-sizing: border-box; padding: 10px' src='"+data.uface+"'/>"
             });
         }
     });

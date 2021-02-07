@@ -210,9 +210,22 @@ class SystemController extends Controller{
 
         $offset = $get["limit"];//偏移量
         $start = ($page-1)*$offset;//起始位置
+
         $model = M("Login_info_log");
-        $datas = $model->order("id DESC")->limit("$start,$offset")->select();
-        $count = $model->count();
+        if($get["key_username"]){ //模糊搜索
+            $word = $get["key_username"];
+            $datas = $model->where("uname LIKE '%$word%'")->order("id DESC")->limit("$start,$offset")->select();
+            $count = $model->where("uname LIKE '%$word%'")->count();
+        }
+        else if($get["key_date"]){//模糊搜索
+            $word = substr(strtotime($get["key_date"]),0,5);
+            $datas = $model->where("login_time LIKE '%$word%'")->order("id DESC")->limit("$start,$offset")->select();
+            $count = $model->where("login_time LIKE '%$word%'")->count();
+        }else{//不模糊搜索
+            $datas = $model->order("id DESC")->limit("$start,$offset")->select();
+            $count = $model->count();
+        }
+
         if($datas){
             $iplocation = new IpLocation("qqwry.dat");
             for($i=0; $i<count($datas); $i++){
@@ -233,7 +246,7 @@ class SystemController extends Controller{
         }else{
             $json = [
                 "code"=>200,
-                "msg"=>"server not data"
+                "msg"=>"没有数据"
             ];
         }
         /** @var TYPE_NAME $json */

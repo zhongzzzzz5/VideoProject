@@ -1,5 +1,6 @@
 <?php
 namespace Admin\Model;
+use Libs\Action\Agent;
 use Think\Model;
 
 class Login_infoModel extends Model{
@@ -25,7 +26,9 @@ class Login_infoModel extends Model{
                     "uname"=>$user_info["username"],
                     "uface"=>$user_info["head_img_path"]?SERVER_URL.__ROOT__.$user_info["head_img_path"]:"",
                     "login_time"=>time(),
-                    "ip"=>get_client_ip()
+                    "ip"=>get_client_ip(),
+                    "os"=>Agent::getOs(),
+                    "browser"=>Agent::getBroswer(),
                 ];
                 $log_id = $model->add($arr);
                 $count = $model->count();//若数据库的量过多，执行删除前排的数据

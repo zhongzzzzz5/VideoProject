@@ -22,7 +22,26 @@
     </style>
 </head>
 <body class="childrenBody">
+<div class="layui-block layui-fluid" style="padding-bottom: 10px">
+    <div class="layui-row">
+        <div class="layui-col-md5">
+            <div style="display: flex">
+                <div style="flex: 2">
+                    <input type="text" id="searchVal" class="layui-input" autocomplete="off" placeholder="用户名" style="float: left; width: 150px;height: 30px;border-right: none;font-size: 10px;">
+                    <a class="layui-btn layui-btn-sm" id="search" style="float: left;border-top-left-radius: 0;border-bottom-left-radius: 0"><i class="layui-icon">&#xe615;</i>搜索</a>
+                </div>
+                <div style="flex: 2">
+                    <input type="text" class="layui-input" autocomplete="off" id="search_date" placeholder="日期" style="float: left; width: 150px;height: 30px;border-right: none;font-size: 10px">
+                    <a class="layui-btn layui-btn-sm" id="search1" style="float: left;border-top-left-radius: 0;border-bottom-left-radius: 0"><i class="layui-icon">&#xe615;</i>搜索</a>
+                </div>
+                <div style="flex: 1">
+                    <a class="layui-btn layui-btn-sm layui-btn-primary" id="flush"><i class="layui-icon">&#xe666;</i>刷新</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
+</div>
 <table id="logs" lay-filter="logs"></table>
 <script type="text/javascript" src="../../common_config/common.js"></script>
 <script type="text/javascript" src="../../layui/layui.js"></script>
