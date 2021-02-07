@@ -307,9 +307,9 @@ layui.use(['form','jquery',"layer"],function() {
                                     '<input type="radio" name="skin" value="蓝色" title="蓝色" lay-filter="blue">'+
                                     '<input type="radio" name="skin" value="自定义" title="自定义" lay-filter="custom">'+
                                     '<div class="skinCustom">'+
-                                        '<input type="text" class="layui-input topColor" name="topSkin" placeholder="顶部颜色" />'+
-                                        '<input type="text" class="layui-input leftColor" name="leftSkin" placeholder="左侧颜色" />'+
-                                        '<input type="text" class="layui-input menuColor" name="btnSkin" placeholder="顶部菜单按钮" />'+
+                                        '<input type="text" class="layui-input topColor" name="topSkin" autocomplete="off" placeholder="顶部颜色" />'+
+                                        '<input type="text" class="layui-input leftColor" name="leftSkin" autocomplete="off" placeholder="左侧颜色" />'+
+                                        '<input type="text" class="layui-input menuColor" name="btnSkin" autocomplete="off" placeholder="顶部菜单按钮" />'+
                                     '</div>'+
                                 '</div>'+
                                 '<div class="layui-form-item skinBtn">'+

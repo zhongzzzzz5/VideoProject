@@ -26,8 +26,10 @@ $("#fakeloader").fakeLoader();
 ```
 #####   以上代码就是调用了fakeLoader.js插件，该插件还提供了以下选项设置。  
 ```
-timeToHide：过渡加载动画时间，毫秒，默认1200。  
-spinner：动画效果，有7个值可选： 'spinner1', 'spinner2', 'spinner3', 'spinner4', 'spinner5', 'spinner6', 'spinner7'，默认值：spinner1。  
-bgColor：过渡遮罩层背景色，默认："#2ecc71"。  
-imagePath：自定义过渡动画图片。
+$("#fakeloader").fakeLoader({
+    timeToHide：过渡加载动画时间，毫秒，默认1200。  
+    spinner：动画效果，有7个值可选： 'spinner1', 'spinner2', 'spinner3', 'spinner4', 'spinner5', 'spinner6', 'spinner7'，默认值：spinner1。  
+    bgColor：过渡遮罩层背景色，默认："#2ecc71"。  
+    imagePath：自定义过渡动画图片。
+  })
 ```  
