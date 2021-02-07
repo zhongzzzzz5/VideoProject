@@ -49,4 +49,9 @@ function Pattern(str,type){
         var dateBool = datePattern.test(str);
         return dateBool;
     }
+
+    //随机数，参数：最小值 最大值
+    function getRandom(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
 }

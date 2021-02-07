@@ -36,7 +36,7 @@
             <button type="button"  @click="getMusic" style="float: left;width: 20%;height: 30px;text-align: center;line-height: 30px;position: relative" class="layui-btn"><i class="layui-icon" style="margin: 0 -5px">&#xe615;</i></button>
             <div class="music-main" style="width: 100%;height: 210px;float: left;margin-top: 5px;overflow-y: auto;overflow-x: hidden">
                 <ul>
-                    <li v-for="(item,index) in musicArr"><a href="javascript:;" :data-id="item.id"><i @click="playMusic(item.id)" :class="'iconfont icon-bofang3'"></i></a><span>{{item.name}}</span></li>
+                    <li v-for="(item,index) in musicArr"><a href="javascript:;" :data-id="item.id"><i class="play-bt" @click="playMusic(item.id)" :class="'iconfont icon-bofang3'"></i></a><span>{{item.name}}</span></li>
                 </ul>
             </div>
         </div>

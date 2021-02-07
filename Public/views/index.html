@@ -15,10 +15,28 @@
 	<link rel="stylesheet" href="layui/css/layui.css" media="all" />
 	<link rel="stylesheet" href="css/index.css" media="all" />
 	<link rel="stylesheet" href="http://at.alicdn.com/t/font_2289172_hj8hlv6el5.css">
+<!--	载入loading插件-->
+	<link rel="stylesheet" href="plugin/plugin2js/fakeLoader/fakeLoader.min.css">
+	<script type="text/javascript" src="plugin/jq/jquery-3.4.1.min.js"></script>
+	<script type="text/javascript" src="plugin/plugin2js/fakeLoader/fakeLoader.js"></script>
 <!--	判断是否已登录-->
 	<script type="text/javascript" src="common_config/verifyLogin/verifyLogin.js"></script>
 </head>
 <body class="main_body">
+<div class="fakeLoader" style="color:#b8b5b5;"></div>
+<script>
+	function getRandom(min, max) {
+		return Math.floor(Math.random() * (max - min + 1)) + min;
+	}
+	$.fakeLoader({
+		timeToHide: 2000,
+		spinner : 'spinner'+getRandom(0,7),//生成0到7的随机数
+		bgColor : "rgba(0,0,0,0.8)",
+	});
+	// timeToHide // fakeLoader 消失的时间（毫秒）
+	// spinner // 动画方式，可选：’spinner1′, ‘spinner2’, ‘spinner3’, ‘spinner4’, ‘spinner5’, ‘spinner6’, ‘spinner7’
+	// bgColor // 背景颜色，可选：Hex, RGB or RGBA colors
+</script>
 	<div class="layui-layout layui-layout-admin">
 		<!-- 顶部 -->
 		<div class="layui-header header">

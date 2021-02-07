@@ -52,13 +52,13 @@
                     <el-row>
                         <el-col :span="5">
                             <el-badge :value="unReadEmailNum" class="item" style="text-align: center">
-                                <i class="el-icon-message" style="font-size: 35px;cursor: pointer"></i>
+                                <i class="el-icon-message" id="unread" style="font-size: 35px;cursor: pointer"></i>
                                 <div style="font-size: 13px;color:#c2c2c2">未读邮件</div>
                             </el-badge>
                         </el-col>
                         <el-col :span="5">
                             <el-badge :value="sendNum" class="item" style="text-align: center">
-                                <i class="el-icon-s-promotion" style="font-size: 35px;cursor: pointer"></i>
+                                <i class="el-icon-s-promotion" id="outbox" style="font-size: 35px;cursor: pointer"></i>
                                 <div style="font-size: 13px;color:#c2c2c2">已发送</div>
                             </el-badge>
                         </el-col>
@@ -101,6 +101,14 @@
                 area: ['580px', '90%'],
                 content: 'page/user/userInfo.html', //iframe的url
             });
+        });
+        //监听未读邮件按钮，点击跳转到收件箱
+        $("#unread").click(function () {
+            $("#inbox-bt", parent.document).click();
+        });
+        //监听已发送按钮，点击跳转到发件箱
+        $("#outbox").click(function () {
+            $("#outbox-bt", parent.document).click();
         });
     });
 </script>

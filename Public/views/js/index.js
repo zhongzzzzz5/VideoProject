@@ -14,11 +14,6 @@ layui.use(['bodyTab','form','element','layer','jquery'],function(){
 			url : host_url + "index.php/Admin/Index/tabs" //获取菜单json地址
 		});
 
-	//载入页面和预先请求接口内容，loading层
-	var indexLoad = layer.load(2, {
-		shade: [0.9,'#393D49'] //0.1透明度的白色背景
-	});
-
 
 	//cms标题名称
 	$.get(host_url+"index.php/Admin/System/systemInfo",function (json) {
@@ -170,11 +165,6 @@ layui.use(['bodyTab','form','element','layer','jquery'],function(){
 	//加载copyright和备案信息
 	copyright();
 
-
-	//页面载入完成，关闭loading
-    setTimeout(function () {
-		layer.close(indexLoad);
-	},2000);
 
 });
 

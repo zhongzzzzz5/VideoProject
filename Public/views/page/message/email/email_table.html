@@ -81,7 +81,10 @@
                     //console.log(okObj);
                     window.sessionStorage.setItem("okObj",JSON.stringify(okObj));
                     layui.layer.msg("选择成功",{icon:1});
-                    setTimeout(()=>{layer.closeAll("iframe");},100)
+                    setTimeout(()=>{
+                        let index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                        parent.layer.close(index);
+                        },100)
                 }else {
                     layer.msg("请选择",{icon:7});
                 }

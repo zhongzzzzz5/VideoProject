@@ -175,9 +175,9 @@
                             setTimeout(()=>{
                                 layer.close(submitLoadingIndex);
                                 formReset();//清空表单
-                                layer.msg("发送成功，正在跳转到首页",{icon:1});
+                                layer.msg("发送成功，正在跳转到home页",{icon:1});
                                 setTimeout(()=>{
-                                    top.location= "../../../index.html";
+                                    $("#home", parent.document).click();
                                 },1000)
                             },1000);
                         }else {
@@ -185,7 +185,7 @@
                                 layer.close(submitLoadingIndex);
                                 layer.msg("发送失败!",{icon:5});
                                 setTimeout(()=>{
-                                    top.location= "../../../index.html";
+                                    $("#home", parent.document).click();
                                 },1000)
                             },1000);
                         }

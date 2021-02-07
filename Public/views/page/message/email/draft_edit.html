@@ -152,7 +152,6 @@
             }
         });
 
-
         //表单提交
         $("#submit").bind('click',function () {
             var submitLoadingIndex = top.layer.msg('发送中，请稍后...',{icon: 16,time:false,shade:0.8});
@@ -179,9 +178,9 @@
                             setTimeout(()=>{
                                 top.layer.close(submitLoadingIndex);
                                 formReset();//清空表单
-                                layer.msg("发送成功,正在跳转到首页",{icon:1});
+                                layer.msg("发送成功,正在跳转到home页",{icon:1});
                                 setTimeout(()=>{
-                                    top.location= "../../../index.html";
+                                    $(parent.parent.document).find("#home").click();
                                 },1000)
                             },1000);
                         }else {
@@ -189,7 +188,7 @@
                                 top.layer.close(submitLoadingIndex);
                                 layer.msg("发送失败!",{icon:5});
                                 setTimeout(()=>{
-                                    top.location= "../../../index.html";
+                                    $(parent.parent.document).find("#home").click();
                                 },1000)
                             },1000);
                         }
