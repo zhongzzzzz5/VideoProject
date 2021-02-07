@@ -177,17 +177,6 @@
                                     $("#code").css({"border":codeOldStyle});
                                     keydown_flag = true;//恢复键盘事件
                             });
-
-                            // var indexStatusTip = top.layer.alert("该用户已在另一个地方登录,确定强制登录",{icon:5,skin: 'layui-layer-lan'
-                            //     ,closeBtn: 0},function () {
-                            //     top.layer.close(indexStatusTip);
-                            //     that.text("登录").attr("disabled",null).removeClass("layui-disabled");
-                            //     $("#imgCode").slideDown(1000);
-                            //     $("#imgCode").css({"pointer-events":"auto"});//开启点击验证码盒子
-                            //     $("#captcha").click();//刷新验证码
-                            //     $("#code").css({"border":codeOldStyle});
-                            //     keydown_flag = true;//恢复键盘事件
-                            // });
                         }else {
                             if(json.status_bool == 0){  //用户状态正常
                                 window.sessionStorage.setItem("LOGIN_TIME",json.login_time);//记录登录时间
