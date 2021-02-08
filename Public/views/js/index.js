@@ -190,6 +190,7 @@ function copyright() {
 function donation(){
 	layer.tab({
 		area : ['260px', '330px'],
+		shadeClose:true,
 		tab : [{
 			title : "微信",
 			content : "<div style='padding:30px;overflow:hidden;background:#d2d0d0;'><img width='200' id='wx-img' src=''></div>"

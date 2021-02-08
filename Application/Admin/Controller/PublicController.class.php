@@ -40,15 +40,16 @@ class PublicController extends Controller{
             $checkResult = $verify->check($code);
             if($checkResult){
                 $time = time();
-                $res = M("captcha")->add($arr = ['id'=>$time,'voucher'=>md5($time.$code)]);//凭证
+                session("voucher_".$time,md5($time.$code));//服务器存储凭证
+                $res = session("voucher_".$time);//返回给前端凭证
                 if($res){
                     $json = [
                         "code"=>200,
                         "msg"=>"ok",
                         "data"=>[
                             "checkResult"=> 1, //校验结果 1则表示成功
-                            "res_id"=>$time,//序号
-                            "voucher"=>M("captcha")->where("id='$time'")->find()["voucher"] //凭证
+                            "res_id"=>$time,//序号,服务器的键
+                            "voucher"=>session("voucher_".$time) //凭证
                         ]
                     ];
                 }else{
@@ -78,14 +79,14 @@ class PublicController extends Controller{
             $checkResult = $post["checkResult"];
             $res_id = $post["res_id"];
             $voucher = $post["voucher"];
-            if($checkResult == "1" && M("captcha")->where("id='$res_id'")->find()["voucher"] == $voucher){ //验证凭证
+            if($checkResult == "1" && session("voucher_".$res_id) == $voucher){ //验证凭证
                 //登录
                 $username = $post['username'];
                 $password = $post['password'];
                 $user = new UserModel();
                 $result = $user->verifyLogin($username,$password);
                 if(!empty($result)){
-                    M("captcha")->where("id='$res_id'")->delete();//删除验证码数据
+                    session("voucher_".$res_id);//删除验证码数据
                     $checkLogin = new Login_infoModel();
                     $uid = $result["id"];
                     $dt = $checkLogin->where("uid = '$uid'")->find();

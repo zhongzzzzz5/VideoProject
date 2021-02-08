@@ -19,7 +19,7 @@ layui.use(['table','layer','jquery','laydate'],function(){
             {field: 'uid', title: '用户id', width:80, align: "center"},
             {field: 'uname', title: '用户名', align:'center'},
             {field: 'uface', title: '头像', align:'center',width:70,templet:function (d) {
-                    return d.uface? "<span class='look-head-img' lay-event='lookImg' data-head-url='"+d.uface+"' style='color: #01AAED; cursor: pointer'>查看</span>" :"<span style='color: #cccccc'>无</span>";
+                    return d.uface? "<span class='look-head-img' lay-event='lookImg' data-head-url='"+d.uface+"' style='color: #009688; cursor: pointer'>查看</span>" :"<span style='color: #cccccc'>无</span>";
                 }},
             {field: 'ip', title: '操作IP',  align:'center',minWidth:130},
             {field: 'ip_location', title: '物理地址',  align:'center',minWidth:150},
