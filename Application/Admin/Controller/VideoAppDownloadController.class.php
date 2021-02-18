@@ -7,7 +7,7 @@ use Think\Controller;
  * @package Admin\Controller
  * @describe 影视接口管理 / 软件下载管理
  */
-class VideoAppDownloadController extends Controller{
+class VideoAppDownloadController extends CommonController{
     /**
      *  上传软件
      */

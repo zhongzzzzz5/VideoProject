@@ -1,5 +1,5 @@
 <?php
-namespace Admin\Controller;
+namespace Home\Controller;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 use Think\Controller;

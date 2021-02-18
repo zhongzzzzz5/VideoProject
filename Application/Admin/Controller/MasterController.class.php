@@ -7,7 +7,7 @@ use Think\Controller;
  * @package Admin\Controller
  * @describe 母版
  */
-class MasterController extends Controller{
+class MasterController extends CommonController{
     /**
      *   母版：底部信息
      */

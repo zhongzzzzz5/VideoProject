@@ -11,7 +11,7 @@ use Think\Upload;
  * @package Admin\Controller
  * @describe 管理系统配置信息
  */
-class SystemController extends Controller{
+class SystemController extends CommonController{
     /**
      *  系统基本参数
      *  渲染cms系统相关信息

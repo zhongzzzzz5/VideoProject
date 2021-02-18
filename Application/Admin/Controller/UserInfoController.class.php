@@ -12,7 +12,7 @@ use Think\Upload;
  * @package Admin\Controller
  * @describe 用户信息管理
  */
-class UserInfoController extends Controller{
+class UserInfoController extends CommonController{
     /**
      *  【所有用户】
      *  展示所有用户

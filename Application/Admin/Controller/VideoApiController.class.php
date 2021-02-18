@@ -9,7 +9,7 @@ use Think\Controller;
  * @package Admin\Controller
  * @describe 影视接口管理
  */
-class VideoApiController extends Controller{
+class VideoApiController extends CommonController{
     /**
      *  接口总开关
      */

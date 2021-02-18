@@ -10,7 +10,7 @@ use Think\Upload;
  * @package Admin\Controller
  * @describe 软件管理
  */
-class AppManagementController extends Controller{
+class AppManagementController extends CommonController{
     /**
      *  展示所有软件信息
      */

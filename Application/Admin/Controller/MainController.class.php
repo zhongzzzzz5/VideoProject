@@ -7,7 +7,7 @@ use Think\Controller;
  * @package Admin\Controller
  * @describe 首页/主页
  */
-class MainController extends Controller{
+class MainController extends CommonController{
     /**
      *  用户总数
      */

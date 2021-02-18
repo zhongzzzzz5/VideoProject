@@ -7,7 +7,7 @@ use Think\Controller;
  * @package Admin\Controller
  * @describe 测试系统与后端的连通
  */
-class ApiController extends Controller{
+class ApiController extends CommonController {
     /**
      *  管理系统与后端是否连通
      */

@@ -9,7 +9,7 @@ use Think\Controller;
  * @package Admin\Controller
  * @describe 接口分类管理类
  */
-class VideoApiCategoryController extends Controller{
+class VideoApiCategoryController extends CommonController{
     /**
      *  展示所有分类
      */

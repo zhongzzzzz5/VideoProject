@@ -6,7 +6,7 @@ use Libs\Action\FileProcessor;
 use Think\Controller;
 use Think\Upload;
 
-class MessageEmailController extends Controller{
+class MessageEmailController extends CommonController{
     /**
      *  展示通讯录
      */

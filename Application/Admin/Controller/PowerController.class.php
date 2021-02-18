@@ -9,7 +9,7 @@ use Think\Controller;
  * @package Admin\Controller
  * @describe 等级、权限类
  */
-class PowerController extends Controller{
+class PowerController extends CommonController{
     /**
      *  用户等级(角色)
      */

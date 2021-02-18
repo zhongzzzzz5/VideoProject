@@ -233,6 +233,7 @@ function getplaintextintrofromhtml($html) {
 }
 
 
+
 /**
  *  解决ipLocation乱码
  * @param $in_charset
@@ -252,4 +253,21 @@ function array_iconv($in_charset,$out_charset,$arr){
  */
 function get_html_text($html){
     return htmlspecialchars(trim(strip_tags($html)));
+}
+
+/**
+ * 提取字符串中的数字
+ * @param string $str
+ * @return mixed|string
+ */
+
+function find_num($str=''){
+    $str=trim($str);
+    if(empty($str)){return '';}
+    $reg='/(\d{3}(\.\d+)?)/is';//匹配数字的正则表达式
+    preg_match_all($reg,$str,$result);
+    if(is_array($result)&&!empty($result)&&!empty($result[1])&&!empty($result[1][0])){
+        return $result[1][0];
+    }
+    return '';
 }

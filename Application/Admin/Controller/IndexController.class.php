@@ -8,7 +8,7 @@ use Think\Controller;
  * @package Admin\Controller
  * @describe 首页
  */
-class IndexController extends Controller{
+class IndexController extends CommonController {
     /**
      *  单一入口
      */
