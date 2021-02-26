@@ -46,8 +46,10 @@
                 size="80%"
                 title="我是标题"
                 :visible.sync="drawer"
-                :with-header="false">
-            <iframe src="draft_edit.html" style="width: 100%;height: 100%" frameborder="0"></iframe>
+                :with-header="false"
+                :destroy-on-close="true"
+                @close="closeDrawer">
+            <iframe id="edit-iframe" src="draft_edit.html" style="width: 100%;height: 100%" frameborder="0"></iframe>
         </el-drawer>
 
     </template>
@@ -74,10 +76,11 @@
                 this.getAllData();
             },
             methods: {
-                //方法
-                getAllData:function(){
+                //获取页面所有数据
+                getAllData() {
                     this.requestData();
                 },
+                //表格按钮的事件方法
                 handleClick(row,str) {
                     console.log(row,str);
                     if(str == 'edit') {
@@ -113,6 +116,11 @@
 
                     }
                 },
+                //关闭抽屉的回调
+                closeDrawer() {
+                    this.getAllData();
+                },
+                //请求数据
                 requestData:function () {
                     axios.get(host_url+"index.php/Admin/MessageEmail/showDraftEmail?from_id="+window.sessionStorage.getItem("UID")).then((result)=>{
                         //console.log(result.data.data)

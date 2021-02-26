@@ -237,35 +237,6 @@ class PublicController extends Controller{
         $this->ajaxReturn($json);
     }
 
-    /**
-     *  用户实时状态（是否被禁用）
-     */
-    public function userTatus(){
-        /*
-         *  0:  用户状态正常
-         *  1:  用户被禁用
-         *  -1: 用户被强迫下线
-         */
-        $get = I("get.");
-        $model = M("user");
-        $text = 0;//初始化
-        //用户是否可用状态
-        $data = $model->find($get["UID"]);
-        if($data["status_bool"] == 1){
-            $text = 1;
-        }
-        //用户是否被强登
-        $mod = M("Login_info");
-        $uid = $get["UID"];
-        $login_time = $get["time"];
-        $dt = $mod->where("uid='$uid' AND login_time='$login_time'")->find();
-        if(!$dt){
-            $text = -1;
-        }
-
-        /** @var TYPE_NAME $text */
-        echo $text;
-    }
 
     /**----------
      *  忘记密码
@@ -407,7 +378,7 @@ class PublicController extends Controller{
     }
 
     /**
-     *  实时监测
+     *  验证邮箱：实时监测
      */
     public function monitor(){
         $post = I('post.');
@@ -491,4 +462,36 @@ class PublicController extends Controller{
         }
         $this->ajaxReturn($json);
     }
+
+
+    /**
+     *  ---------------- 监听用户实时状态 --------------
+     */
+    public function userTatus(){
+        /*
+         *  0:  用户状态正常
+         *  1:  用户被禁用
+         *  -1: 用户被强迫下线
+         */
+        $get = I("get.");
+        $model = M("user");
+        $user_status = 0;//初始化
+
+        //用户是否可用状态
+        $data = $model->find($get["UID"]);
+        if($data["status_bool"] == 1){
+            $user_status = 1;
+        }
+        //用户是否被强登
+        $mod = M("Login_info");
+        $uid = $get["UID"];
+        $login_time = $get["time"];
+        $dt = $mod->where("uid='$uid' AND login_time='$login_time'")->find();
+        if(!$dt){
+            $user_status = -1;
+        }
+
+        $this->ajaxReturn($json =["code"=>200,"msg"=>"ok","data"=>["user_status"=>$user_status]]);
+    }
+
 }

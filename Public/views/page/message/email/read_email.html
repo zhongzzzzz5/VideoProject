@@ -13,37 +13,36 @@
     <link rel="stylesheet" href="../../../css/public.css" media="all" />
     <link rel="stylesheet" href="http://at.alicdn.com/t/font_2289172_hj8hlv6el5.css">
     <style>
-        .layui-input{
-
+        .email-top>li{
+            margin: 5px 0;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        #subject{
+            font-size: 20px;
+            font-family: "黑体";
+            font-weight: 700;
+        }
+        .lab{
+            color: #999999;
+        }
+        .text{
+            margin-left: 10px;
         }
     </style>
 </head>
-<body class="childrenBody">
-<form class="layui-form layui-form-pane" style="padding: 20px">
-
-
-    <div class="layui-form-item" id="from_usernameBox">
-        <label class="layui-form-label">发件人</label>
-        <div class="layui-input-block">
-            <input type="text" id="from_username" autocomplete="off" class="layui-input layui-disabled" disabled>
-        </div>
+<body class="childrenBody" style="overflow: hidden">
+    <div style="padding: 10px 30px">
+        <ul class="email-top">
+            <li style="border-bottom: none"><span class="lab">主&nbsp;&nbsp;题 : </span><span class="text" id="subject"></span></li>
+            <li><span class="lab">发件人 : </span><span class="text" id="from_username"></span></li>
+            <li><span class="lab">附&nbsp;&nbsp;件 :</span><span class="text" id="file_name"></span></li>
+            <li><span class="lab">时&nbsp;&nbsp;间 : </span><span class="text" id="add_time" style="color: #999999"></span></li>
+            <li>
+                <div id="editor" style="width: 100%; height: 300px"></div>
+            </li>
+        </ul>
     </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">主题</label>
-        <div class="layui-input-block">
-            <input type="text" id="subject" autocomplete="off" class="layui-input layui-disabled" disabled>
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">附件</label>
-        <div class="layui-input-block">
-            <input type="text" id="file_name" autocomplete="off" class="layui-input layui-disabled" disabled style="float: left;width: 75%;">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <div id="editor" style="width: 100%; height: 300px"></div>
-    </div>
-</form>
 
 
 <script type="text/javascript" src="../../../common_config/common.js"></script>
@@ -92,21 +91,17 @@
                     }
                 });
             }
-            $("#from_username").val(data.from_username);
-            $("#subject").val(data.subject);
+            $("#from_username").html(data.from_username);
+            $("#subject").html(data.subject);
             if(data.from_real_name){
-                $("#from_usernameBox").after("    <div class=\"layui-form-item\">\n" +
-                    "        <label class=\"layui-form-label\">姓名</label>\n" +
-                    "        <div class=\"layui-input-block\">\n" +
-                    "            <input type=\"text\" id=\"from_real_name\" autocomplete=\"off\" value='"+data.from_real_name+"' class=\"layui-input layui-disabled\" disabled>\n" +
-                    "        </div>\n" +
-                    "    </div>");
+                $("#from_username").after("<span style='margin-left: 5px;color: #cccccc'>["+data.from_real_name+"]</span>");
             }
             if(data.file_name){
-                $("#file_name").val(data.file_name).after("<button class='layui-btn layui-btn-primary' id='downloadFile' data-val='"+data.id+"' type='button' style='float: left;width: 25%;'>下载附件</button>");
+                $("#file_name").html(data.file_name).after("<button type='button' style='margin-left: 10px' class='layui-btn layui-btn-xs' id='downloadFile' data-val='"+data.id+"'>下载</button>");
             }else {
-                $("#file_name").val("无附件").css({"width":"100%"});
+                $("#file_name").html("<span style='color:#cccccc;'>无附件</span>");
             }
+            $("#add_time").html(data.add_time);
             editor.txt.html(data.content) // 重新设置编辑器内容
 
         }

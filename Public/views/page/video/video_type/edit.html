@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>编辑</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="../../../layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="../../../css/public.css" media="all" />
+    <style>
+        .layui-form-label{
+            width: auto!important;
+        }
+        .layui-input-block{
+            margin-left: 70px!important;
+        }
+    </style>
+</head>
+<body class="childrenBody" style="background-color:#eeeeee;">
+<form class="layui-form" style="padding: 20px">
+<!--    主键-->
+    <input type="hidden" id="type_id">
+    <div class="layui-form-item">
+        <label class="layui-form-label">类别</label>
+        <div class="layui-input-block">
+            <input type="text" id="type_name" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">图标</label>
+        <div class="layui-input-block">
+            <img id="type_icon" src="" alt="" width="35" style="border: 1px solid #cccccc;width: 35px;height: 35px;overflow:hidden;">
+            <button type="button" class="layui-btn layui-btn-normal layui-btn-sm" id="upload-btn">点击上传</button>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">排序</label>
+        <div class="layui-input-block">
+            <input type="checkbox" id="type_order" title="" checked>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">状态</label>
+        <div class="layui-input-block">
+            <input type="checkbox" id="type_status" lay-filter="type_status" name="switch" lay-skin="switch" lay-text="正常|禁用">
+        </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">描述</label>
+        <div class="layui-input-block">
+            <textarea id="type_content" name="desc" placeholder="请输入内容" class="layui-textarea"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button type="button" class="layui-btn" id="submit"><i class="layui-icon">&#xe609;</i>立即提交</button>
+        </div>
+    </div>
+</form>
+<script type="text/javascript" src="../../../common_config/common.js"></script>
+<script type="text/javascript" src="../../../layui/layui.js"></script>
+<script>
+    layui.use(['form','layer','jquery','upload'],function () {
+        var form = layui.form,
+            layer = parent.layer === undefined ? layui.layer : top.layer,
+            upload = layui.upload,
+            $ = layui.jquery;
+
+        //上传图标
+        var uploadInst = upload.render({
+            elem: '#upload-btn'
+            ,accept:"images"
+            ,exts:"jpg|png|jpeg"
+            ,url: host_url+'index.php/Admin/VideoType/uploadIcon?type_id='+$("#type_id").val() //改成您自己的上传接口
+            ,before: function(obj){
+                //预读本地文件示例，不支持ie8
+                obj.preview(function(index, file, result){
+                    $('#type_icon').attr('src', result); //图片链接（base64）
+                });
+            }
+            ,done: function(res){
+                //上传成功
+                if(res.code == 200){
+                    layer.msg('上传成功',{icon:1});
+                    //刷新父页面
+                    $(".layui-tab-item.layui-show",parent.document).find("iframe")[0].contentWindow.location.reload();
+                }
+                //上传失败
+                else {
+                    return  layer.msg("上传失败",{icon:5});
+                }
+            }
+        });
+
+        //监听开关
+        var type_status_switch = $("#type_status").attr("checked")?0:1; //初始化
+        form.on('switch(type_status)', function(data){
+            // console.log(data.elem.checked); //开关是否开启，true或者false
+            if(data.elem.checked == true){
+                type_status_switch = 0;
+            }else {
+                type_status_switch = 1;
+            }
+        });
+
+
+
+        //监听提交表单
+        var oldData = {  //获取旧数据
+            "type_id" : $("#type_id").val(),
+            "type_name" : $("#type_name").val(),
+            "type_status" : type_status_switch,
+            "type_content" : $("#type_content").val()
+        }
+        $("#submit").click(function () {
+            var newData = { //获取新数据
+                "type_id" : $("#type_id").val(),
+                "type_name" : $("#type_name").val(),
+                "type_status" : type_status_switch,
+                "type_content" : $("#type_content").val()
+            }
+            if(isObjectValueEqual(oldData,newData)){
+                layer.msg("未修改，请勿提交",{icon:7,time:500});
+                return;
+            }else {
+                var index = top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});
+                $.post(host_url+"index.php/Admin/VideoType/editVideoType",
+                    newData,
+                    function (json) {
+                        if(json.code == 200){
+                            setTimeout(()=>{
+                                layer.close(index);
+                                let msgIndex = layer.msg("编辑成功",{icon:1});
+                                setTimeout(()=>{
+                                    layer.close(msgIndex);
+                                    let index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                                    parent.layer.close(index); //再执行关闭
+                                    //刷新父页面
+                                    $(".layui-tab-item.layui-show",parent.document).find("iframe")[0].contentWindow.location.reload();
+                                },1000)
+                            },500)
+                        }else {
+                            layer.close(index);
+                            layer.msg("提交失败，清稍后重试",{icon:5});
+                            setTimeout(()=>{
+                                let index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                                parent.layer.close(index); //再执行关闭
+                                //刷新父页面
+                                $(".layui-tab-item.layui-show",parent.document).find("iframe")[0].contentWindow.location.reload();
+                            },1000)
+                        }
+                    }
+                );
+            }
+
+        });
+    })
+</script>
+</body>
+</html>

@@ -96,8 +96,9 @@ class IndexController extends CommonController {
                         ["title"=>"版本管理","icon"=>"&#xe609;","href"=>"","spread"=>false],
                         ["title"=>"软件下载管理","icon"=>"&#xe609;","href"=>"","spread"=>false],
                         ["title"=>"轮播图管理","icon"=>"&#xe609;","href"=>"","spread"=>false],
-                        ["title"=>"影视分类","icon"=>"&#xe609;","href"=>"","spread"=>false],
+                        ["title"=>"影视分类","icon"=>"&#xe609;","href"=>"page/video/video_type/video_type.html","spread"=>false],
                         ["title"=>"影视管理","icon"=>"&#xe609;","href"=>"","spread"=>false],
+                        ["title"=>"数据采集","icon"=>"&#xe609;","href"=>"http://www.5wpz.top/mac_cms/admin1.php/admin/index/index.html","spread"=>false],
                         
                     ]
                 ],

@@ -76,10 +76,10 @@
                     //console.log(data);
                     layer.open({
                         type: 2,
-                        title: "时间："+data.add_time,
+                        title: ["时间："+data.add_time,"background-color:#20222A;color:#ffffff"],
                         shadeClose: true,
                         shade: 0.5,
-                        area: ['580px', '90%'],
+                        area: ['1000px', '90%'],
                         content: 'page/message/email/read_email.html', //iframe的url
                         success:function () {
                             window.sessionStorage.setItem("temp_readData",JSON.stringify(data));

@@ -10,7 +10,9 @@ layui.use(['form','jquery',"layer"],function() {
         layer.alert("请先将项目部署到 localhost 下再进行访问【建议通过tomcat、webstorm、hb等方式运行，不建议通过iis方式运行】，否则部分数据将无法显示");
     }else{    //判断是否处于锁屏状态【如果关闭以后则未关闭浏览器之前不再显示】
         if(window.sessionStorage.getItem("lockcms") != "true" && window.sessionStorage.getItem("showNotice") != "true"){
-            showNotice();
+            setTimeout(()=>{
+                showNotice();
+            },2000)
         }
     }
 
@@ -54,17 +56,26 @@ layui.use(['form','jquery',"layer"],function() {
     })
 
     //聊天
-    $(".chat").click(function () {
+    $(".the_msg").click(function () {
         layer.open({
-            type: 2,
-            title: '很多时候，我们想最大化看，比如像这个页面。',
+            type: 1,
+            title: '消息',
             shadeClose: true,
             shade: [0.3,"#393D49"],
             offset:'rb',
             anim: 2,
             maxmin: true, //开启最大化最小化按钮
             area: ['350px', '500px'],
-            content: '//fly.layui.com/'
+            content: '<div style="padding: 20px"><h2>未读邮件</h2><span id="un_read_num"></span></div>',
+            success:function () {
+                $.get(host_url+"index.php/Admin/MessageEmail/emailNum?id="+window.sessionStorage.getItem("UID"),function (json) {
+                    if(json.code == 200){
+                        $("#un_read_num").html(json.data.unread_count);
+                    }else {
+                        $("#un_read_num").html("0");
+                    }
+                });
+            }
         });
     });
 
